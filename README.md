@@ -44,6 +44,7 @@ Geoliteip is a php tool to use and manage maxmind GeoLite2 free databases in mmd
 ### Integration
 
 To play with GeoLiteIp from your own projects, adjust your composer.json as below.
+For information '...' is just a continuity symbol, pls do not copy as it.
 
 * Add as below the required packages
 ``` json
@@ -81,8 +82,8 @@ To play with GeoLiteIp from your own projects, adjust your composer.json as belo
 * Append a new entry in autoload as below
 ``` json
 "autoload": {
-    "classmap": [],
     "psr-4": {
+        ...
         "PierInfor\\": "vendor/PierInfor/GeoLiteIp/src/"
     }
 }
