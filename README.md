@@ -139,8 +139,8 @@ if (function_exists('opcache_get_configuration')) {
     ini_set('opcache.load_comments', true);
 }
 
-$there = __DIR__;
-$loader = require 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
+
 $geoInst = new GeoLiteIp();
 $forceUpdate = false;
 echo 'Begin update @' . microtime(true) . "\n";
