@@ -143,11 +143,11 @@ $there = __DIR__;
 $loader = require 'vendor/autoload.php';
 $geoInst = new GeoLiteIp();
 $forceUpdate = false;
-echo 'Begin update' . "\n";
+echo 'Begin update @' . microtime(true) . "\n";
 $geoInst->setAdapter(GeoLiteIp::ADAPTER_ASN)->update($forceUpdate);
 $geoInst->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)->update($forceUpdate);
 $geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY)->update($forceUpdate);
-echo 'End update' . "\n";
+echo 'End   update @' . microtime(true) . "\n";
 $ipv6ToCheck = '2a01:e35:2422:4d60:2ad2:44ff:fe06:2983';
 $ipv4ToCheck = '82.66.36.214';
 echo 'Scanning ipv6 ' . $ipv6ToCheck . "\n";
@@ -163,8 +163,8 @@ php ./src/app.php
 ```
 Should be immediate with no errors and display messages as below
 ``` bash
-Begin update 
-End update 
+Begin update @1568318808.9869
+End   update @1568318808.9871
 Scanning ipv6 2a01:e35:2422:4d60:2ad2:44ff:fe06:2983
 Scanning ipv4 82.66.36.214
 [
@@ -187,6 +187,8 @@ Scanning ipv4 82.66.36.214
 ]
 ```
 Changing forceUpdate to true will force update with the same display but with an elapsed time bit longer.
+
+You can figure out the accuracy changing from ipv4 to ipv6.
 
 ## Todo
 
