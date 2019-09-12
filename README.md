@@ -148,6 +148,13 @@ $geoInst->setAdapter(GeoLiteIp::ADAPTER_ASN)->update($forceUpdate);
 $geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY)->update($forceUpdate);
 $geoInst->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)->update($forceUpdate);
 echo 'End update' . "\n";
+$ipv6ToCheck = '2a01:e35:2422:4d60:2ad2:44ff:fe06:2983';
+$ipv4ToCheck = '82.66.36.214';
+echo 'Scanning ipv6 ' . $ipv6ToCheck . "\n";
+echo 'Scanning ipv4 ' . $ipv4ToCheck . "\n";
+$geoInst->addIp($ipv6ToCheck);
+$geoInst->addIp($ipv4ToCheck);
+echo $geoInst->process()->toJson();
 ```
 
 From the root of the project running
@@ -158,6 +165,26 @@ Should be immediate with no errors and display messages as below
 ``` bash
 Begin update 
 End update 
+Scanning ipv6 2a01:e35:2422:4d60:2ad2:44ff:fe06:2983
+Scanning ipv4 82.66.36.214
+[
+    {
+        "ip": "2a01:e35:2422:4d60:2ad2:44ff:fe06:2983",
+        "country": "FR",
+        "city": "?",
+        "lon": 48.85,
+        "lat": 2.5,
+        "radius": 10
+    },
+    {
+        "ip": "82.66.36.214",
+        "country": "FR",
+        "city": "Aubervilliers",
+        "lon": 48.9163,
+        "lat": 2.3869,
+        "radius": 5
+    }
+]
 ```
 Changing forceUpdate to true will force update with the same display but with an elapsed time bit longer.
 
