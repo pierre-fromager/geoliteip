@@ -38,7 +38,6 @@ Geoliteip is a php tool to use and manage maxmind GeoLite2 free databases in mmd
 ### Facilities
 
 * run test (pass tests and generate coverage in html format)
-* run checklint (linter checker).
 * run lint (lint the code).
 
 ### Integration
@@ -77,7 +76,7 @@ Copy paste the code below in app.php
 
 namespace Company\MyApp;
 
-use PierInfor\GeoLite\GeoLiteIp;
+use PierInfor\GeoLite\Ip;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -93,12 +92,12 @@ if (function_exists('opcache_get_configuration')) {
 
 require_once 'vendor/autoload.php';
 
-$geoInst = new GeoLiteIp();
+$geoInst = new Ip();
 $forceUpdate = false;
 echo 'Begin update @' . microtime(true) . "\n";
-$geoInst->setAdapter(GeoLiteIp::ADAPTER_ASN)->update($forceUpdate);
-$geoInst->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)->update($forceUpdate);
-$geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY)->update($forceUpdate);
+$geoInst->setAdapter(Ip::ADAPTER_ASN)->update($forceUpdate);
+$geoInst->setAdapter(Ip::ADAPTER_COUNTRY)->update($forceUpdate);
+$geoInst->setAdapter(Ip::ADAPTER_CITY)->update($forceUpdate);
 echo 'End   update @' . microtime(true) . "\n";
 $ipv6ToCheck = '2a01:e35:2422:4d60:2ad2:44ff:fe06:2983';
 $ipv4ToCheck = '82.66.36.214';
