@@ -3,10 +3,10 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use PierInfor\GeoLiteIpFileManager;
+use PierInfor\GeoLite\GeoLiteIpFileManager;
 
 /**
- * @covers \PierInfor\GeoLiteIpFileManager::<public>
+ * @covers \PierInfor\GeoLite\GeoLiteIpFileManager::<public>
  */
 class GeoLiteIpFileManagerTest extends PFT
 {
@@ -116,17 +116,17 @@ class GeoLiteIpFileManagerTest extends PFT
 
     /**
      * testInstance
-     * @covers PierInfor\GeoLiteIpFileManager::__construct
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::__construct
      */
     public function testInstance()
     {
-        $isGeoInstance = $this->geoInst instanceof \PierInfor\GeoLiteIpFileManager;
+        $isGeoInstance = $this->geoInst instanceof \PierInfor\GeoLite\GeoLiteIpFileManager;
         $this->assertTrue($isGeoInstance);
     }
 
     /**
      * testDownload
-     * @covers PierInfor\GeoLiteIpFileManager::download
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::download
      */
     public function testDownload()
     {
@@ -140,7 +140,7 @@ class GeoLiteIpFileManagerTest extends PFT
 
     /**
      * testFolderList
-     * @covers PierInfor\GeoLiteIpFileManager::folderList
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::folderList
      */
     public function testFolderList()
     {
@@ -157,7 +157,7 @@ class GeoLiteIpFileManagerTest extends PFT
 
     /**
      * testFileDate
-     * @covers PierInfor\GeoLiteIpFileManager::fileDate
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::fileDate
      */
     public function testFileDate()
     {
@@ -171,7 +171,7 @@ class GeoLiteIpFileManagerTest extends PFT
 
     /**
      * testIsFileDateToday
-     * @covers PierInfor\GeoLiteIpFileManager::isFileDateToday
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::isFileDateToday
      */
     public function testIsFileDateToday()
     {
@@ -192,7 +192,7 @@ class GeoLiteIpFileManagerTest extends PFT
 
     /**
      * testUnlinkFiles
-     * @covers PierInfor\GeoLiteIpFileManager::unlinkFiles
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::unlinkFiles
      */
     public function testUnlinkFiles()
     {
@@ -219,7 +219,7 @@ class GeoLiteIpFileManagerTest extends PFT
 
     /**
      * testFolderList
-     * @covers PierInfor\GeoLiteIpFileManager::deleteFolder
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::deleteFolder
      */
     public function testDeleteFolder()
     {
@@ -231,7 +231,7 @@ class GeoLiteIpFileManagerTest extends PFT
 
     /**
      * testFileList
-     * @covers PierInfor\GeoLiteIpFileManager::fileList
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::fileList
      */
     public function testFileList()
     {
@@ -242,7 +242,7 @@ class GeoLiteIpFileManagerTest extends PFT
 
     /**
      * testUnlinkFolders
-     * @covers PierInfor\GeoLiteIpFileManager::unlinkFolders
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::unlinkFolders
      */
     public function testUnlinkFolders()
     {
@@ -257,7 +257,7 @@ class GeoLiteIpFileManagerTest extends PFT
 
     /**
      * testCopyFile
-     * @covers PierInfor\GeoLiteIpFileManager::copyFile
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::copyFile
      */
     public function testCopyFile()
     {
@@ -281,8 +281,8 @@ class GeoLiteIpFileManagerTest extends PFT
 
     /**
      * testUngz
-     * @covers PierInfor\GeoLiteIpFileManager::copyFile
-     * @covers PierInfor\GeoLiteIpFileManager::ungz
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::copyFile
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::ungz
      */
     public function testUngz()
     {
@@ -309,7 +309,7 @@ class GeoLiteIpFileManagerTest extends PFT
 
     /**
      * testUngzNotFound
-     * @covers PierInfor\GeoLiteIpFileManager::ungz
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::ungz
      */
     public function testUngzNotFound()
     {
@@ -319,7 +319,7 @@ class GeoLiteIpFileManagerTest extends PFT
 
     /**
      * testUngzMalformed
-     * @covers PierInfor\GeoLiteIpFileManager::ungz
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::ungz
      */
     public function testUngzMalformed()
     {
@@ -337,8 +337,8 @@ class GeoLiteIpFileManagerTest extends PFT
 
     /**
      * testUntar
-     * @covers PierInfor\GeoLiteIpFileManager::ungz
-     * @covers PierInfor\GeoLiteIpFileManager::untar
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::ungz
+     * @covers PierInfor\GeoLite\GeoLiteIpFileManager::untar
      * @bugs https://bugs.php.net/bug.php?id=75101
      */
     public function testUntar()

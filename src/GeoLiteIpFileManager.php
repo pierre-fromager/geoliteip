@@ -1,6 +1,6 @@
 <?php
 
-namespace PierInfor;
+namespace PierInfor\GeoLite;
 
 use GuzzleHttp\Client;
 

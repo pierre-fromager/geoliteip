@@ -1,9 +1,9 @@
 <?php
 
-namespace PierInfor;
+namespace PierInfor\GeoLite;
 
-use PierInfor\GeoLiteIpFileManager;
-use PierInfor\GeoLiteIpUpdaterInterface;
+use PierInfor\GeoLite\GeoLiteIpFileManager;
+use PierInfor\GeoLite\GeoLiteIpUpdaterInterface;
 
 /**
  * @use GeoLiteIpUpdater

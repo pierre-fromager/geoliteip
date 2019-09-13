@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "PierInfor\\": "src/"
+            "PierInfor\\GeoLite\\": "src/"
         }
     },
     "config": {

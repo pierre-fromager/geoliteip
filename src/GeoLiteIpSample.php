@@ -1,8 +1,8 @@
 <?php
 
-namespace PierInfor;
+namespace PierInfor\GeoLite;
 
-use PierInfor\GeoLiteIp;
+use PierInfor\GeoLite\GeoLiteIp;
 
 class GeoLiteIpSample extends GeoLiteIp
 {

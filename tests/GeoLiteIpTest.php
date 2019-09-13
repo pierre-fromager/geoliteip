@@ -3,11 +3,11 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use PierInfor\GeoLiteIp;
-use PierInfor\GeoLiteIpUpdater;
+use PierInfor\GeoLite\GeoLiteIp;
+use PierInfor\GeoLite\GeoLiteIpUpdater;
 
 /**
- * @covers \PierInfor\GeoLiteIp::<public>
+ * @covers \PierInfor\GeoLite\GeoLiteIp::<public>
  */
 class GeoLiteIpTest extends PFT
 {
@@ -49,7 +49,7 @@ class GeoLiteIpTest extends PFT
      */
     protected static function getMethod(string $name)
     {
-        $class = new \ReflectionClass('PierInfor\GeoLiteIp');
+        $class = new \ReflectionClass('PierInfor\GeoLite\GeoLiteIp');
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         return $method;
@@ -66,8 +66,8 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testInstance
-     * @covers PierInfor\GeoLiteIp::__construct
-     * @covers PierInfor\GeoLiteIp::setAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::__construct
+     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
      */
     public function testInstance()
     {
@@ -86,7 +86,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testSetReaders
-     * @covers PierInfor\GeoLiteIp::setReaders
+     * @covers PierInfor\GeoLite\GeoLiteIp::setReaders
      */
     public function testSetReaders()
     {
@@ -101,7 +101,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testGetHeaders
-     * @covers PierInfor\GeoLiteIp::getHeaders
+     * @covers PierInfor\GeoLite\GeoLiteIp::getHeaders
      */
     public function testGetHeaders()
     {
@@ -128,7 +128,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testReset
-     * @covers PierInfor\GeoLiteIp::reset
+     * @covers PierInfor\GeoLite\GeoLiteIp::reset
      */
     public function testReset()
     {
@@ -139,7 +139,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testAddIp
-     * @covers PierInfor\GeoLiteIp::addIp
+     * @covers PierInfor\GeoLite\GeoLiteIp::addIp
      */
     public function testAddIp()
     {
@@ -156,7 +156,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testOkFromfile
-     * @covers PierInfor\GeoLiteIp::fromFile
+     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
      */
     public function testFromfileException()
     {
@@ -166,7 +166,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testSetAdapterException
-     * @covers PierInfor\GeoLiteIp::setAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
      */
     public function testSetAdapterException()
     {
@@ -176,7 +176,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testSetAdapter
-     * @covers PierInfor\GeoLiteIp::setAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
      */
     public function testSetAdapters()
     {
@@ -191,7 +191,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testGetUpdater
-     * @covers PierInfor\GeoLiteIp::getUpdater
+     * @covers PierInfor\GeoLite\GeoLiteIp::getUpdater
      */
     public function testGetUpdater()
     {
@@ -211,7 +211,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testUpdate
-     * @covers PierInfor\GeoLiteIp::update
+     * @covers PierInfor\GeoLite\GeoLiteIp::update
      */
     public function testUpdate()
     {
@@ -227,7 +227,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testOkFromfile
-     * @covers PierInfor\GeoLiteIp::fromFile
+     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
      */
     public function testOkFromfile()
     {
@@ -243,7 +243,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testNokFromfile
-     * @covers PierInfor\GeoLiteIp::fromFile
+     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
      */
     public function testNokFromfile()
     {
@@ -261,10 +261,10 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testProcessCountry
-     * @covers PierInfor\GeoLiteIp::fromFile
-     * @covers PierInfor\GeoLiteIp::setAdapter
-     * @covers PierInfor\GeoLiteIp::process
-     * @covers PierInfor\GeoLiteIp::toArray
+     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
+     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::process
+     * @covers PierInfor\GeoLite\GeoLiteIp::toArray
      */
     public function testProcessCountry()
     {
@@ -291,10 +291,10 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testProcessCity
-     * @covers PierInfor\GeoLiteIp::fromFile
-     * @covers PierInfor\GeoLiteIp::setAdapter
-     * @covers PierInfor\GeoLiteIp::process
-     * @covers PierInfor\GeoLiteIp::toArray
+     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
+     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::process
+     * @covers PierInfor\GeoLite\GeoLiteIp::toArray
      */
     public function testProcessCity()
     {
@@ -324,11 +324,11 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testSort
-     * @covers PierInfor\GeoLiteIp::fromFile
-     * @covers PierInfor\GeoLiteIp::setAdapter
-     * @covers PierInfor\GeoLiteIp::process
-     * @covers PierInfor\GeoLiteIp::sort
-     * @covers PierInfor\GeoLiteIp::toArray
+     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
+     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::process
+     * @covers PierInfor\GeoLite\GeoLiteIp::sort
+     * @covers PierInfor\GeoLite\GeoLiteIp::toArray
      */
     public function testSort()
     {
@@ -355,7 +355,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCompareArray
-     * @covers PierInfor\GeoLiteIp::compareArray
+     * @covers PierInfor\GeoLite\GeoLiteIp::compareArray
      */
     public function testCompareArray()
     {
@@ -383,11 +383,11 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testToJson
-     * @covers PierInfor\GeoLiteIp::fromFile
-     * @covers PierInfor\GeoLiteIp::setAdapter
-     * @covers PierInfor\GeoLiteIp::process
-     * @covers PierInfor\GeoLiteIp::toJson
-     * @covers PierInfor\GeoLiteIp::getIpList
+     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
+     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::process
+     * @covers PierInfor\GeoLite\GeoLiteIp::toJson
+     * @covers PierInfor\GeoLite\GeoLiteIp::getIpList
      */
     public function testToJson()
     {
@@ -416,10 +416,10 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testToCsv
-     * @covers PierInfor\GeoLiteIp::fromFile
-     * @covers PierInfor\GeoLiteIp::setAdapter
-     * @covers PierInfor\GeoLiteIp::process
-     * @covers PierInfor\GeoLiteIp::toCsv
+     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
+     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::process
+     * @covers PierInfor\GeoLite\GeoLiteIp::toCsv
      */
     public function testToCsv()
     {
@@ -450,7 +450,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCityAdapter
-     * @covers PierInfor\GeoLiteIp::cityAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::cityAdapter
      */
     public function testCityAdapter()
     {
@@ -472,7 +472,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCityAdapterAddressNotFound
-     * @covers PierInfor\GeoLiteIp::cityAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::cityAdapter
      */
     public function testCityAdapterAddressNotFound()
     {
@@ -490,7 +490,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCityAdapterInvalidArgument
-     * @covers PierInfor\GeoLiteIp::cityAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::cityAdapter
      */
     public function testCityAdapterInvalidArgument()
     {
@@ -508,7 +508,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCountryAdapter
-     * @covers PierInfor\GeoLiteIp::countryAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::countryAdapter
      */
     public function testCountryAdapter()
     {
@@ -526,7 +526,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCountryAdapterAddressNotFound
-     * @covers PierInfor\GeoLiteIp::countryAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::countryAdapter
      */
     public function testCountryAdapterAddressNotFound()
     {
@@ -544,7 +544,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCountryAdapterInvalidArgument
-     * @covers PierInfor\GeoLiteIp::countryAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::countryAdapter
      */
     public function testCountryAdapterInvalidArgument()
     {
@@ -562,7 +562,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testAsnAdapter
-     * @covers PierInfor\GeoLiteIp::asnAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::asnAdapter
      */
     public function testAsnAdapter()
     {
@@ -581,7 +581,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testAsnAdapterAddressNotFound
-     * @covers PierInfor\GeoLiteIp::asnAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::asnAdapter
      */
     public function testAsnAdapterAddressNotFound()
     {
@@ -599,7 +599,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testAsnAdapterInvalidArgument
-     * @covers PierInfor\GeoLiteIp::asnAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::asnAdapter
      */
     public function testAsnAdapterInvalidArgument()
     {

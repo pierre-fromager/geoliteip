@@ -1,9 +1,9 @@
 <?php
 
-namespace PierInfor;
+namespace PierInfor\GeoLite;
 
-use PierInfor\GeoLiteIpInterface;
-use PierInfor\GeoLiteIpUpdater;
+use PierInfor\GeoLite\GeoLiteIpInterface;
+use PierInfor\GeoLite\GeoLiteIpUpdater;
 use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Database\Reader;
 

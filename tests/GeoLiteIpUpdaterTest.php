@@ -3,10 +3,10 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use PierInfor\GeoLiteIpUpdater;
+use PierInfor\GeoLite\GeoLiteIpUpdater;
 
 /**
- * @covers \PierInfor\GeoLiteIpUpdater::<public>
+ * @covers \PierInfor\GeoLite\GeoLiteIpUpdater::<public>
  */
 class GeoLiteIpUpdaterTest extends PFT
 {
@@ -55,7 +55,7 @@ class GeoLiteIpUpdaterTest extends PFT
 
     /**
      * testInstance
-     * @covers PierInfor\GeoLiteIpUpdater::__construct
+     * @covers PierInfor\GeoLite\GeoLiteIpUpdater::__construct
      */
     public function testInstance()
     {
@@ -64,7 +64,7 @@ class GeoLiteIpUpdaterTest extends PFT
 
     /**
      * testSetAdapterException
-     * @covers PierInfor\GeoLiteIp::setAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
      */
     public function testSetAdapterException()
     {
@@ -74,7 +74,7 @@ class GeoLiteIpUpdaterTest extends PFT
 
     /**
      * testSetAdapter
-     * @covers PierInfor\GeoLiteIpUpdater::setAdapter
+     * @covers PierInfor\GeoLite\GeoLiteIpUpdater::setAdapter
      */
     public function testSetAdapter()
     {
@@ -88,7 +88,7 @@ class GeoLiteIpUpdaterTest extends PFT
 
     /**
      * testClean
-     * @covers PierInfor\GeoLiteIpUpdater::clean
+     * @covers PierInfor\GeoLite\GeoLiteIpUpdater::clean
      */
     public function testClean()
     {
@@ -103,7 +103,7 @@ class GeoLiteIpUpdaterTest extends PFT
 
     /**
      * testUpdateCity
-     * @covers PierInfor\GeoLiteIpUpdater::update
+     * @covers PierInfor\GeoLite\GeoLiteIpUpdater::update
      */
     public function testUpdateCity()
     {
@@ -113,7 +113,7 @@ class GeoLiteIpUpdaterTest extends PFT
 
     /**
      * testUpdateRequired
-     * @covers PierInfor\GeoLiteIpUpdater::updateRequired
+     * @covers PierInfor\GeoLite\GeoLiteIpUpdater::updateRequired
      */
     public function testUpdateRequired()
     {
