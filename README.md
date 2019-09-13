@@ -45,14 +45,12 @@ Geoliteip is a php tool to use and manage maxmind GeoLite2 free databases in mmd
 
 To play with GeoLiteIp from your own projects, adjust your composer.json as below.
 
-For information '...' is just a continuity symbol, pls do not copy as it.
+For information '...' is just a continuity marker, pls do not copy as it.
 
 * Add as below the required packages
 ``` json
 "require": {
     ...
-    "geoip2/geoip2": "~2.0",
-    "guzzlehttp/guzzle": "^6.3",
     "PierInfor/GeoLiteIp": "dev-master"
 }	
 ```
@@ -60,24 +58,12 @@ For information '...' is just a continuity symbol, pls do not copy as it.
 * Add as below the package definition
 ``` json
 "repositories": [
+    ...
     {
-        "type": "package",
-        "package": {
-            "name": "PierInfor/GeoLiteIp",
-            "version": "dev-master",
-            "source": {
-                "url": "https://github.com/pierre-fromager/geoliteip.git",
-                "type": "git",
-                "reference": "origin/master"
-            },
-            "autoload": {
-                "psr-0": {
-                    "PierInfor\\GeoLiteIp": "src"
-                }
-            }
-        }
+        "type": "git",
+        "url": "https://github.com/pierre-fromager/geoliteip.git"
     }
-]
+],
 ```
 
 * Append a new entry in autoload as below
@@ -88,30 +74,6 @@ For information '...' is just a continuity symbol, pls do not copy as it.
         "PierInfor\\": "vendor/PierInfor/GeoLiteIp/src/"
     }
 }
-```
-
-I know this is not fair, but this is the way to deploy a package without packagist.
-
-#### Check
-
-Running 
-``` bash
-composer show 
-```
-
-Should return (maybe versions change)
-``` bash
-composer/ca-bundle         1.2.4                    Lets you find a path to the system CA bundle, and includes a fallback...
-geoip2/geoip2              v2.9.0                   MaxMind GeoIP2 PHP API
-guzzlehttp/guzzle          6.3.3                    Guzzle is a PHP HTTP client library
-guzzlehttp/promises        v1.3.1                   Guzzle promises library
-guzzlehttp/psr7            1.6.1                    PSR-7 message implementation that also provides common utility methods
-maxmind-db/reader          v1.4.1                   MaxMind DB Reader API
-maxmind/web-service-common v0.5.0                   Internal MaxMind Web Service API
-PierInfor/GeoLiteIp        dev-master origin/master
-psr/http-message           1.0.1                    Common interface for HTTP messages
-ralouphie/getallheaders    3.0.3                    A polyfill for getallheaders.
-
 ```
 
 #### Dummy app
