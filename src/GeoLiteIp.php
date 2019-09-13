@@ -71,6 +71,13 @@ class GeoLiteIp implements GeoLiteIpInterface
     private $adapter;
 
     /**
+     * Sort column
+     *
+     * @var Integer
+     */
+    private $sortCol;
+
+    /**
      * Instanciate with given locales
      *
      * @param array $locales
@@ -108,6 +115,7 @@ class GeoLiteIp implements GeoLiteIpInterface
     {
         $this->ipList = [];
         $this->results = [];
+        $this->sortCol = 1;
     }
 
     /**
@@ -243,10 +251,21 @@ class GeoLiteIp implements GeoLiteIpInterface
      */
     public function sort(int $col = 1): GeoLiteIp
     {
-        usort($this->results, function ($a, $b) use ($col) {
-            return strcmp($a[$col], $b[$col]);
-        });
+        $this->sortCol = $col;
+        usort($this->results, [$this, 'compareArray']);
         return $this;
+    }
+
+    /**
+     * compare two array for a given column
+     *
+     * @param array $a
+     * @param array $b
+     * @return integer
+     */
+    protected function compareArray(array $a, array $b): int
+    {
+        return strcmp($a[$this->sortCol], $b[$this->sortCol]);
     }
 
     /**

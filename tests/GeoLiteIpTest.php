@@ -110,13 +110,13 @@ class GeoLiteIpTest extends PFT
             $this->geoInst,
             []
         );
-        $this->assertEquals($headers,GeoLiteIp::HEADERS_COMMON);
+        $this->assertEquals($headers, GeoLiteIp::HEADERS_COMMON);
         $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_ASN);
         $headers = self::getMethod('getHeaders')->invokeArgs(
             $this->geoInst,
             []
         );
-        $this->assertEquals($headers,GeoLiteIp::HEADERS_ASN);
+        $this->assertEquals($headers, GeoLiteIp::HEADERS_ASN);
         $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_COUNTRY);
         $headers = self::getMethod('getHeaders')->invokeArgs(
             $this->geoInst,
@@ -271,20 +271,21 @@ class GeoLiteIpTest extends PFT
         $error = false;
         try {
             $this->geoInst->fromFile(self::ASSET_IP_LIST);
-            $ipList = $this->geoInst->getIpList();
-            $this->assertNotEmpty($ipList);
-            $this->assertEquals($ipList[0], self::FIRST_IP);
-            $record = $this->geoInst
-                ->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)
-                ->process()
-                ->toArray();
-            $this->assertNotEmpty($record);
-            $this->assertTrue(count($record[0]) === 2);
-            $this->assertEquals($record[0][0], self::FIRST_IP);
-            $this->assertEquals(strlen($record[0][1]), 2);
         } catch (\Exception $e) {
             $error = true;
         }
+        $this->assertFalse($error);
+        $ipList = $this->geoInst->getIpList();
+        $this->assertNotEmpty($ipList);
+        $this->assertEquals($ipList[0], self::FIRST_IP);
+        $record = $this->geoInst
+            ->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)
+            ->process()
+            ->toArray();
+        $this->assertNotEmpty($record);
+        $this->assertTrue(count($record[0]) === 2);
+        $this->assertEquals($record[0][0], self::FIRST_IP);
+        $this->assertEquals(strlen($record[0][1]), 2);
         $this->assertFalse($error);
     }
 
@@ -300,23 +301,24 @@ class GeoLiteIpTest extends PFT
         $error = false;
         try {
             $this->geoInst->fromFile(self::ASSET_IP_LIST);
-            $ipList = $this->geoInst->getIpList();
-            $this->assertNotEmpty($ipList);
-            $this->assertEquals($ipList[0], self::FIRST_IP);
-            $record = $this->geoInst
-                ->setAdapter(GeoLiteIp::ADAPTER_CITY)
-                ->process()
-                ->toArray();
-            $this->assertNotEmpty($record);
-            $this->assertTrue(count($record[0]) === 6);
-            $this->assertEquals($record[0][0], self::FIRST_IP);
-            $this->assertEquals(strlen($record[0][1]), 2);
-            $this->assertEquals($record[0][2], self::QM);
-            $this->assertTrue(is_float($record[0][3]));
-            $this->assertTrue(is_float($record[0][4]));
         } catch (\Exception $e) {
             $error = true;
         }
+        $this->assertFalse($error);
+        $ipList = $this->geoInst->getIpList();
+        $this->assertNotEmpty($ipList);
+        $this->assertEquals($ipList[0], self::FIRST_IP);
+        $record = $this->geoInst
+            ->setAdapter(GeoLiteIp::ADAPTER_CITY)
+            ->process()
+            ->toArray();
+        $this->assertNotEmpty($record);
+        $this->assertTrue(count($record[0]) === 6);
+        $this->assertEquals($record[0][0], self::FIRST_IP);
+        $this->assertEquals(strlen($record[0][1]), 2);
+        $this->assertEquals($record[0][2], self::QM);
+        $this->assertTrue(is_float($record[0][3]));
+        $this->assertTrue(is_float($record[0][4]));
         $this->assertFalse($error);
     }
 
@@ -333,21 +335,50 @@ class GeoLiteIpTest extends PFT
         $error = false;
         try {
             $this->geoInst->fromFile(self::ASSET_IP_LIST);
-            $record = $this->geoInst
-                ->setAdapter(GeoLiteIp::ADAPTER_CITY)
-                ->process()
-                ->sort(0)
-                ->toArray();
-            $this->assertNotEmpty($record[0]);
-            $this->assertEquals($record[0][0], self::FIRST_IP);
-            $record = $this->geoInst->sort(1)->toArray();
-            $this->assertNotEquals($record[0][0], self::FIRST_IP);
-            $record = $this->geoInst->sort(0)->toArray();
-            $this->assertEquals($record[0][0], self::FIRST_IP);
         } catch (\Exception $e) {
             $error = true;
         }
         $this->assertFalse($error);
+        $record = $this->geoInst
+            ->setAdapter(GeoLiteIp::ADAPTER_CITY)
+            ->process()
+            ->sort(0)
+            ->toArray();
+        $this->assertNotEmpty($record[0]);
+        $this->assertEquals($record[0][0], self::FIRST_IP);
+        $record = $this->geoInst->sort(1)->toArray();
+        $this->assertNotEquals($record[0][0], self::FIRST_IP);
+        $record = $this->geoInst->sort(0)->toArray();
+        $this->assertEquals($record[0][0], self::FIRST_IP);
+        $this->assertFalse($error);
+    }
+
+    /**
+     * testCompareArray
+     * @covers PierInfor\GeoLiteIp::compareArray
+     */
+    public function testCompareArray()
+    {
+        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY);
+        $compareArray = $this->getMethod('compareArray');
+        $result = $compareArray->invokeArgs(
+            $this->geoInst,
+            [['a', 'b'], ['c', 'd']]
+        );
+        $this->assertTrue(is_int($result));
+        $this->assertTrue($result < 0);
+        $result = $compareArray->invokeArgs(
+            $this->geoInst,
+            [['c', 'd'], ['a', 'b']]
+        );
+        $this->assertTrue(is_int($result));
+        $this->assertTrue($result > 0);
+        $result = $compareArray->invokeArgs(
+            $this->geoInst,
+            [['a', 'b'], ['a', 'b']]
+        );
+        $this->assertTrue(is_int($result));
+        $this->assertEquals($result, 0);
     }
 
     /**
@@ -363,22 +394,23 @@ class GeoLiteIpTest extends PFT
         $error = false;
         try {
             $this->geoInst->fromFile(self::ASSET_IP_LIST);
-            $json = $this->geoInst
-                ->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)
-                ->process()
-                ->toJson();
-            $this->assertNotEmpty($json);
-            $this->assertFalse(is_array($json));
-            $result = json_decode($json, true);
-            $nbResult = count($result);
-            $npIp = count($this->geoInst->getIpList());
-            $this->assertEquals($nbResult, $npIp);
-            $record = $result[0];
-            $this->assertEquals($record['ip'], self::FIRST_IP);
-            $this->assertEquals(strlen($record['country']), 2);
         } catch (\Exception $e) {
             $error = true;
         }
+        $this->assertFalse($error);
+        $json = $this->geoInst
+            ->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)
+            ->process()
+            ->toJson();
+        $this->assertNotEmpty($json);
+        $this->assertFalse(is_array($json));
+        $result = json_decode($json, true);
+        $nbResult = count($result);
+        $npIp = count($this->geoInst->getIpList());
+        $this->assertEquals($nbResult, $npIp);
+        $record = $result[0];
+        $this->assertEquals($record['ip'], self::FIRST_IP);
+        $this->assertEquals(strlen($record['country']), 2);
         $this->assertFalse($error);
     }
 
@@ -393,25 +425,26 @@ class GeoLiteIpTest extends PFT
     {
         $error = false;
         try {
-            $delimiter = ',';
             $this->geoInst->fromFile(self::ASSET_IP_LIST);
-            $csv = $this->geoInst
-                ->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)
-                ->process()
-                ->toCsv($delimiter);
-            $this->assertNotEmpty($csv);
-            $this->assertFalse(is_array($csv));
-            $result = [];
-            $csvLines = explode("\n", $csv);
-            $csvLinesCount = count($csvLines);
-            for ($c = 0; $c < $csvLinesCount; $c++) {
-                $result[] = explode($delimiter, $csvLines[$c]);
-            }
-            $this->assertEquals($result[0][0], self::FIRST_IP);
-            $this->assertEquals(strlen($result[0][1]), 2);
         } catch (\Exception $e) {
             $error = true;
         }
+        $this->assertFalse($error);
+        $delimiter = ',';
+        $csv = $this->geoInst
+            ->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)
+            ->process()
+            ->toCsv($delimiter);
+        $this->assertNotEmpty($csv);
+        $this->assertFalse(is_array($csv));
+        $result = [];
+        $csvLines = explode("\n", $csv);
+        $csvLinesCount = count($csvLines);
+        for ($c = 0; $c < $csvLinesCount; $c++) {
+            $result[] = explode($delimiter, $csvLines[$c]);
+        }
+        $this->assertEquals($result[0][0], self::FIRST_IP);
+        $this->assertEquals(strlen($result[0][1]), 2);
         $this->assertFalse($error);
     }
 

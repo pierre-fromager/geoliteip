@@ -155,6 +155,7 @@ echo 'Scanning ipv4 ' . $ipv4ToCheck . "\n";
 $geoInst->addIp($ipv6ToCheck);
 $geoInst->addIp($ipv4ToCheck);
 echo $geoInst->process()->toJson();
+unset($geoInst);
 ```
 
 From the root of the project running
