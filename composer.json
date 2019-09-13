@@ -1,5 +1,5 @@
 {
-    "name": "pf.pier-infor.fr/geoliteip",
+    "name": "PierInfor/GeoLiteIp",
     "description": "Pier-Infor Geoliteip.",
     "keywords": ["php", "geoip", "maxmind", "free"],
     "license": "GNU3",
