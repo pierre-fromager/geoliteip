@@ -2,9 +2,7 @@
 
 namespace PierInfor\GeoLite;
 
-use PierInfor\GeoLite\GeoLiteIp;
-
-class GeoLiteIpSample extends GeoLiteIp
+class Sample extends Ip
 {
     
     public function __construct($locales = ['fr'])
@@ -12,7 +10,7 @@ class GeoLiteIpSample extends GeoLiteIp
         parent::__construct($locales);
     }
 
-    public function byCities(int $colSort = 1): GeoLiteIp
+    public function byCities(int $colSort = 1): Ip
     {
         try {
             $this
@@ -25,7 +23,7 @@ class GeoLiteIpSample extends GeoLiteIp
         return $this;
     }
 
-    public function byCountries(int $colSort = 1): GeoLiteIp
+    public function byCountries(int $colSort = 1): Ip
     {
         try {
             $this

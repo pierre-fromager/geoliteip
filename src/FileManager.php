@@ -5,10 +5,9 @@ namespace PierInfor\GeoLite;
 use GuzzleHttp\Client;
 
 /**
- * @use GeoLiteIpFileManager
  * GeoLiteIpFileManager class to manage files
  */
-class GeoLiteIpFileManager implements GeoLiteIpFileManagerInterface
+class FileManager implements Interfaces\FileManagerInterface
 {
 
     /**

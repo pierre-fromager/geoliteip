@@ -2,16 +2,14 @@
 
 namespace PierInfor\GeoLite;
 
-use PierInfor\GeoLite\GeoLiteIpInterface;
-use PierInfor\GeoLite\GeoLiteIpUpdater;
+use PierInfor\GeoLite\Updater;
 use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Database\Reader;
 
 /**
- * @use GeoLiteIp
- * GeoLiteIp class to use free maxmind dbs in mmdb format
+ * Ip class to use free maxmind dbs in mmdb format
  */
-class GeoLiteIp implements GeoLiteIpInterface
+class Ip implements Interfaces\IpInterface
 {
 
     /**
@@ -45,7 +43,7 @@ class GeoLiteIp implements GeoLiteIpInterface
     /**
      * updater instance
      *
-     * @var GeoLiteIpUpdater
+     * @var Updater
      */
     private $updater;
 
@@ -88,7 +86,7 @@ class GeoLiteIp implements GeoLiteIpInterface
         $this->reset();
         $this->setReaders();
         $this->setAdapter();
-        $this->updater = new GeoLiteIpUpdater();
+        $this->updater = new Updater();
     }
 
     /**
@@ -125,7 +123,7 @@ class GeoLiteIp implements GeoLiteIpInterface
      * @return GeoLiteIp
      * @throws \Exception
      */
-    public function setAdapter(string $adapter = self::ADAPTER_COUNTRY): GeoLiteIp
+    public function setAdapter(string $adapter = self::ADAPTER_COUNTRY): Ip
     {
         if (!in_array($adapter, self::ADAPTERS)) {
             throw new \Exception('Error: Unkown adapter ' . $adapter);
@@ -138,9 +136,9 @@ class GeoLiteIp implements GeoLiteIpInterface
      * update current db if required or forced
      *
      * @param boolean $force
-     * @return GeoLiteIpUpdater
+     * @return Updater
      */
-    public function update(bool $force = false): GeoLiteIpUpdater
+    public function update(bool $force = false): Updater
     {
         return ($this->getUpdater()->updateRequired() || $force)
             ? $this->updater->update()
@@ -151,9 +149,9 @@ class GeoLiteIp implements GeoLiteIpInterface
      * addIp
      *
      * @param string $ip
-     * @return GeoLiteIp
+     * @return Ip
      */
-    public function addIp(string $ip): GeoLiteIp
+    public function addIp(string $ip): Ip
     {
         $this->ipList[] = trim($ip);
         $this->ipList = array_unique($this->ipList);
@@ -164,10 +162,10 @@ class GeoLiteIp implements GeoLiteIpInterface
      * load ip list from a file
      *
      * @param string $filename
-     * @return GeoLiteIp
+     * @return Ip
      * @throws \Exception
      */
-    public function fromFile(string $filename): GeoLiteIp
+    public function fromFile(string $filename): Ip
     {
         $this->reset();
         $handle = @fopen($filename, 'r');
@@ -196,9 +194,9 @@ class GeoLiteIp implements GeoLiteIpInterface
     /**
      * geo process ip list
      *
-     * @return GeoLiteIp
+     * @return Ip
      */
-    public function process(): GeoLiteIp
+    public function process(): Ip
     {
         $this->results = [];
         $reader = $this->getReader();
@@ -234,11 +232,11 @@ class GeoLiteIp implements GeoLiteIpInterface
     }
 
     /**
-     * returns GeoLiteIpUpdater instance
+     * returns Updater instance
      *
-     * @return GeoLiteIpUpdater
+     * @return Updater
      */
-    public function getUpdater(): GeoLiteIpUpdater
+    public function getUpdater(): Updater
     {
         return $this->updater->setAdapter($this->adapter);
     }
@@ -247,9 +245,9 @@ class GeoLiteIp implements GeoLiteIpInterface
      * sort result by column number
      *
      * @param integer $col
-     * @return GeoLiteIp
+     * @return Ip
      */
-    public function sort(int $col = 1): GeoLiteIp
+    public function sort(int $col = 1): Ip
     {
         $this->sortCol = $col;
         usort($this->results, [$this, 'compareArray']);
@@ -313,9 +311,9 @@ class GeoLiteIp implements GeoLiteIpInterface
     /**
      * set readers, one per db file
      *
-     * @return GeoLiteIp
+     * @return Ip
      */
-    protected function setReaders(): GeoLiteIp
+    protected function setReaders(): Ip
     {
         $this->readerCity = new Reader(
             __DIR__ . self::DB_PATH . self::DB_CITY_FILENAME,

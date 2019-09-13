@@ -1,13 +1,15 @@
 <?php
 
-namespace PierInfor\GeoLite;
+namespace PierInfor\GeoLite\Interfaces;
 
+use PierInfor\GeoLite\Ip;
+use PierInfor\GeoLite\Updater;
 use GeoIp2\Database\Reader;
 
 /**
  * @codeCoverageIgnore
  */
-interface GeoLiteIpInterface extends GeoLiteIpCommonInterface
+interface IpInterface extends CommonInterface
 {
     const HEADERS_COMMON = ['ip', 'country', 'city', 'lon', 'lat', 'radius'];
     const HEADERS_ASN = ['ip', 'as', 'organization'];
@@ -22,21 +24,21 @@ interface GeoLiteIpInterface extends GeoLiteIpCommonInterface
 
     public function getReader(): Reader;
 
-    public function getUpdater(): GeoLiteIpUpdater;
+    public function getUpdater(): Updater;
 
-    public function update(bool $force = false): GeoLiteIpUpdater;
+    public function update(bool $force = false): Updater;
 
-    public function setAdapter(string $adapter = self::ADAPTER_COUNTRY): GeoLiteIp;
+    public function setAdapter(string $adapter = self::ADAPTER_COUNTRY): Ip;
 
-    public function addIp(string $ip): GeoLiteIp;
+    public function addIp(string $ip): Ip;
 
-    public function fromFile(string $filename): GeoLiteIp;
+    public function fromFile(string $filename): Ip;
 
     public function getIpList(): array;
 
-    public function process(): GeoLiteIp;
+    public function process(): Ip;
 
-    public function sort(int $col = 1): GeoLiteIp;
+    public function sort(int $col = 1): Ip;
 
     public function toArray(): array;
 

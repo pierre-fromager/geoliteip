@@ -2,14 +2,10 @@
 
 namespace PierInfor\GeoLite;
 
-use PierInfor\GeoLite\GeoLiteIpFileManager;
-use PierInfor\GeoLite\GeoLiteIpUpdaterInterface;
-
 /**
- * @use GeoLiteIpUpdater
- * GeoLiteIpUpdater class to update free maxmind dbs in mmdb format
+ * Updater class update free maxmind dbs in mmdb format
  */
-class GeoLiteIpUpdater implements GeoLiteIpUpdaterInterface
+class Updater implements Interfaces\UpdaterInterface
 {
 
     const ABS_DB_PATH = __DIR__ . self::DB_PATH;
@@ -24,7 +20,7 @@ class GeoLiteIpUpdater implements GeoLiteIpUpdaterInterface
     /**
      * File manager
      *
-     * @var GeoLiteIpFileManager
+     * @var FileManager
      */
     private $fileManager;
 
@@ -35,7 +31,7 @@ class GeoLiteIpUpdater implements GeoLiteIpUpdaterInterface
      */
     public function __construct()
     {
-        $this->fileManager = new GeoLiteIpFileManager();
+        $this->fileManager = new FileManager();
         $this->adapter = self::ADAPTER_COUNTRY;
     }
 
@@ -51,10 +47,10 @@ class GeoLiteIpUpdater implements GeoLiteIpUpdaterInterface
      * set adapter
      *
      * @param string $adapter
-     * @return GeoLiteIpUpdater
+     * @return Updater
      * @throws \Exception
      */
-    public function setAdapter(string $adapter = self::ADAPTER_COUNTRY): GeoLiteIpUpdater
+    public function setAdapter(string $adapter = self::ADAPTER_COUNTRY): Updater
     {
         if (!in_array($adapter, self::ADAPTERS)) {
             throw new \Exception('Error: Unkown adapter ' . $adapter);
@@ -68,7 +64,7 @@ class GeoLiteIpUpdater implements GeoLiteIpUpdaterInterface
      *
      * @return GeoLiteIpUpdater
      */
-    public function update(): GeoLiteIpUpdater
+    public function update(): Updater
     {
         $this->clean();
         $url = self::UPDATERS[$this->adapter];

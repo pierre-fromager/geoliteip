@@ -3,13 +3,13 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use PierInfor\GeoLite\GeoLiteIp;
-use PierInfor\GeoLite\GeoLiteIpUpdater;
+use PierInfor\GeoLite\Ip;
+use PierInfor\GeoLite\Updater;
 
 /**
- * @covers \PierInfor\GeoLite\GeoLiteIp::<public>
+ * @covers \PierInfor\GeoLite\Ip::<public>
  */
-class GeoLiteIpTest extends PFT
+class IpTest extends PFT
 {
     const PATH_ASSETS_TESTS = 'src/assets/tests/';
     const ASSET_IP_LIST = self::PATH_ASSETS_TESTS . 'iplist.txt';
@@ -25,7 +25,7 @@ class GeoLiteIpTest extends PFT
     /**
      * instance
      *
-     * @var GeoLiteIp
+     * @var Ip
      */
     protected $geoInst;
 
@@ -38,7 +38,7 @@ class GeoLiteIpTest extends PFT
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
         }
-        $this->geoInst = new GeoLiteIp();
+        $this->geoInst = new Ip();
     }
 
     /**
@@ -49,7 +49,7 @@ class GeoLiteIpTest extends PFT
      */
     protected static function getMethod(string $name)
     {
-        $class = new \ReflectionClass('PierInfor\GeoLite\GeoLiteIp');
+        $class = new \ReflectionClass('PierInfor\GeoLite\Ip');
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         return $method;
@@ -66,27 +66,27 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testInstance
-     * @covers PierInfor\GeoLite\GeoLiteIp::__construct
-     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
+     * @covers PierInfor\GeoLite\Ip::__construct
+     * @covers PierInfor\GeoLite\Ip::setAdapter
      */
     public function testInstance()
     {
-        $isGeoInstance = $this->geoInst instanceof GeoLiteIp;
+        $isGeoInstance = $this->geoInst instanceof Ip;
         $this->assertTrue($isGeoInstance);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_ASN);
-        $isGeoInstance = $this->geoInst instanceof GeoLiteIp;
+        $this->geoInst->setAdapter(Ip::ADAPTER_ASN);
+        $isGeoInstance = $this->geoInst instanceof Ip;
         $this->assertTrue($isGeoInstance);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY);
-        $isGeoInstance = $this->geoInst instanceof GeoLiteIp;
+        $this->geoInst->setAdapter(Ip::ADAPTER_CITY);
+        $isGeoInstance = $this->geoInst instanceof Ip;
         $this->assertTrue($isGeoInstance);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_COUNTRY);
-        $isGeoInstance = $this->geoInst instanceof GeoLiteIp;
+        $this->geoInst->setAdapter(Ip::ADAPTER_COUNTRY);
+        $isGeoInstance = $this->geoInst instanceof Ip;
         $this->assertTrue($isGeoInstance);
     }
 
     /**
      * testSetReaders
-     * @covers PierInfor\GeoLite\GeoLiteIp::setReaders
+     * @covers PierInfor\GeoLite\Ip::setReaders
      */
     public function testSetReaders()
     {
@@ -94,30 +94,30 @@ class GeoLiteIpTest extends PFT
             $this->geoInst,
             []
         );
-        $this->assertTrue($inst instanceof GeoLiteIp);
+        $this->assertTrue($inst instanceof Ip);
         $this->assertNotNull($this->geoInst->getReader());
         $this->assertEquals($this->geoInst, $inst);
     }
 
     /**
      * testGetHeaders
-     * @covers PierInfor\GeoLite\GeoLiteIp::getHeaders
+     * @covers PierInfor\GeoLite\Ip::getHeaders
      */
     public function testGetHeaders()
     {
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY);
+        $this->geoInst->setAdapter(Ip::ADAPTER_CITY);
         $headers = self::getMethod('getHeaders')->invokeArgs(
             $this->geoInst,
             []
         );
-        $this->assertEquals($headers, GeoLiteIp::HEADERS_COMMON);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_ASN);
+        $this->assertEquals($headers, Ip::HEADERS_COMMON);
+        $this->geoInst->setAdapter(Ip::ADAPTER_ASN);
         $headers = self::getMethod('getHeaders')->invokeArgs(
             $this->geoInst,
             []
         );
-        $this->assertEquals($headers, GeoLiteIp::HEADERS_ASN);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_COUNTRY);
+        $this->assertEquals($headers, Ip::HEADERS_ASN);
+        $this->geoInst->setAdapter(Ip::ADAPTER_COUNTRY);
         $headers = self::getMethod('getHeaders')->invokeArgs(
             $this->geoInst,
             []
@@ -128,7 +128,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testReset
-     * @covers PierInfor\GeoLite\GeoLiteIp::reset
+     * @covers PierInfor\GeoLite\Ip::reset
      */
     public function testReset()
     {
@@ -139,7 +139,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testAddIp
-     * @covers PierInfor\GeoLite\GeoLiteIp::addIp
+     * @covers PierInfor\GeoLite\Ip::addIp
      */
     public function testAddIp()
     {
@@ -148,7 +148,7 @@ class GeoLiteIpTest extends PFT
         $this->assertTrue(isset($ipList[0]));
         $this->assertEquals($ipList, [self::FIRST_IP]);
         $result = $this->geoInst
-            ->setAdapter(GeoLiteIp::ADAPTER_CITY)
+            ->setAdapter(Ip::ADAPTER_CITY)
             ->process()
             ->toArray();
         $this->assertEquals(count($result), 1);
@@ -156,7 +156,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testOkFromfile
-     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
+     * @covers PierInfor\GeoLite\Ip::fromFile
      */
     public function testFromfileException()
     {
@@ -166,7 +166,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testSetAdapterException
-     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
+     * @covers PierInfor\GeoLite\Ip::setAdapter
      */
     public function testSetAdapterException()
     {
@@ -176,58 +176,58 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testSetAdapter
-     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
+     * @covers PierInfor\GeoLite\Ip::setAdapter
      */
     public function testSetAdapters()
     {
         $this->geoInst->addIp(self::FIRST_IP);
-        $result = $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY)->process()->toArray();
+        $result = $this->geoInst->setAdapter(Ip::ADAPTER_CITY)->process()->toArray();
         $this->assertNotEmpty($result);
-        $result = $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)->process()->toArray();
+        $result = $this->geoInst->setAdapter(Ip::ADAPTER_COUNTRY)->process()->toArray();
         $this->assertNotEmpty($result);
-        $result = $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_ASN)->process()->toArray();
+        $result = $this->geoInst->setAdapter(Ip::ADAPTER_ASN)->process()->toArray();
         $this->assertNotEmpty($result);
     }
 
     /**
      * testGetUpdater
-     * @covers PierInfor\GeoLite\GeoLiteIp::getUpdater
+     * @covers PierInfor\GeoLite\Ip::getUpdater
      */
     public function testGetUpdater()
     {
-        $updater = $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_ASN)->getUpdater();
-        $isUpdaterInstance = $updater instanceof GeoLiteIpUpdater;
+        $updater = $this->geoInst->setAdapter(Ip::ADAPTER_ASN)->getUpdater();
+        $isUpdaterInstance = $updater instanceof Updater;
         $this->assertTrue($isUpdaterInstance);
         $this->assertTrue(is_bool($updater->updateRequired()));
-        $updater = $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY)->getUpdater();
-        $isUpdaterInstance = $updater instanceof GeoLiteIpUpdater;
+        $updater = $this->geoInst->setAdapter(Ip::ADAPTER_CITY)->getUpdater();
+        $isUpdaterInstance = $updater instanceof Updater;
         $this->assertTrue($isUpdaterInstance);
         $this->assertTrue(is_bool($updater->updateRequired()));
-        $updater = $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)->getUpdater();
-        $isUpdaterInstance = $updater instanceof GeoLiteIpUpdater;
+        $updater = $this->geoInst->setAdapter(Ip::ADAPTER_COUNTRY)->getUpdater();
+        $isUpdaterInstance = $updater instanceof Updater;
         $this->assertTrue($isUpdaterInstance);
         $this->assertTrue(is_bool($updater->updateRequired()));
     }
 
     /**
      * testUpdate
-     * @covers PierInfor\GeoLite\GeoLiteIp::update
+     * @covers PierInfor\GeoLite\Ip::update
      */
     public function testUpdate()
     {
         $updater = $this->geoInst->update($force = true);
-        $isUpdaterInstance = $updater instanceof GeoLiteIpUpdater;
+        $isUpdaterInstance = $updater instanceof Updater;
         $this->assertTrue($isUpdaterInstance);
-        $shouldUpdate = $updater->setAdapter(GeoLiteIp::ADAPTER_CITY)->updateRequired();
+        $shouldUpdate = $updater->setAdapter(Ip::ADAPTER_CITY)->updateRequired();
         $this->assertTrue(is_bool($shouldUpdate));
-        $resupAsn = $updater->setAdapter(GeoLiteIp::ADAPTER_ASN)->update();
-        $isUpdaterInstance = $resupAsn instanceof GeoLiteIpUpdater;
+        $resupAsn = $updater->setAdapter(Ip::ADAPTER_ASN)->update();
+        $isUpdaterInstance = $resupAsn instanceof Updater;
         $this->assertTrue($isUpdaterInstance);
     }
 
     /**
      * testOkFromfile
-     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
+     * @covers PierInfor\GeoLite\Ip::fromFile
      */
     public function testOkFromfile()
     {
@@ -243,7 +243,7 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testNokFromfile
-     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
+     * @covers PierInfor\GeoLite\Ip::fromFile
      */
     public function testNokFromfile()
     {
@@ -261,10 +261,10 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testProcessCountry
-     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
-     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
-     * @covers PierInfor\GeoLite\GeoLiteIp::process
-     * @covers PierInfor\GeoLite\GeoLiteIp::toArray
+     * @covers PierInfor\GeoLite\Ip::fromFile
+     * @covers PierInfor\GeoLite\Ip::setAdapter
+     * @covers PierInfor\GeoLite\Ip::process
+     * @covers PierInfor\GeoLite\Ip::toArray
      */
     public function testProcessCountry()
     {
@@ -279,7 +279,7 @@ class GeoLiteIpTest extends PFT
         $this->assertNotEmpty($ipList);
         $this->assertEquals($ipList[0], self::FIRST_IP);
         $record = $this->geoInst
-            ->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)
+            ->setAdapter(Ip::ADAPTER_COUNTRY)
             ->process()
             ->toArray();
         $this->assertNotEmpty($record);
@@ -291,10 +291,10 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testProcessCity
-     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
-     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
-     * @covers PierInfor\GeoLite\GeoLiteIp::process
-     * @covers PierInfor\GeoLite\GeoLiteIp::toArray
+     * @covers PierInfor\GeoLite\Ip::fromFile
+     * @covers PierInfor\GeoLite\Ip::setAdapter
+     * @covers PierInfor\GeoLite\Ip::process
+     * @covers PierInfor\GeoLite\Ip::toArray
      */
     public function testProcessCity()
     {
@@ -309,7 +309,7 @@ class GeoLiteIpTest extends PFT
         $this->assertNotEmpty($ipList);
         $this->assertEquals($ipList[0], self::FIRST_IP);
         $record = $this->geoInst
-            ->setAdapter(GeoLiteIp::ADAPTER_CITY)
+            ->setAdapter(Ip::ADAPTER_CITY)
             ->process()
             ->toArray();
         $this->assertNotEmpty($record);
@@ -324,11 +324,11 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testSort
-     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
-     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
-     * @covers PierInfor\GeoLite\GeoLiteIp::process
-     * @covers PierInfor\GeoLite\GeoLiteIp::sort
-     * @covers PierInfor\GeoLite\GeoLiteIp::toArray
+     * @covers PierInfor\GeoLite\Ip::fromFile
+     * @covers PierInfor\GeoLite\Ip::setAdapter
+     * @covers PierInfor\GeoLite\Ip::process
+     * @covers PierInfor\GeoLite\Ip::sort
+     * @covers PierInfor\GeoLite\Ip::toArray
      */
     public function testSort()
     {
@@ -340,7 +340,7 @@ class GeoLiteIpTest extends PFT
         }
         $this->assertFalse($error);
         $record = $this->geoInst
-            ->setAdapter(GeoLiteIp::ADAPTER_CITY)
+            ->setAdapter(Ip::ADAPTER_CITY)
             ->process()
             ->sort(0)
             ->toArray();
@@ -355,11 +355,11 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCompareArray
-     * @covers PierInfor\GeoLite\GeoLiteIp::compareArray
+     * @covers PierInfor\GeoLite\Ip::compareArray
      */
     public function testCompareArray()
     {
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY);
+        $this->geoInst->setAdapter(Ip::ADAPTER_CITY);
         $compareArray = $this->getMethod('compareArray');
         $result = $compareArray->invokeArgs(
             $this->geoInst,
@@ -383,11 +383,11 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testToJson
-     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
-     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
-     * @covers PierInfor\GeoLite\GeoLiteIp::process
-     * @covers PierInfor\GeoLite\GeoLiteIp::toJson
-     * @covers PierInfor\GeoLite\GeoLiteIp::getIpList
+     * @covers PierInfor\GeoLite\Ip::fromFile
+     * @covers PierInfor\GeoLite\Ip::setAdapter
+     * @covers PierInfor\GeoLite\Ip::process
+     * @covers PierInfor\GeoLite\Ip::toJson
+     * @covers PierInfor\GeoLite\Ip::getIpList
      */
     public function testToJson()
     {
@@ -399,7 +399,7 @@ class GeoLiteIpTest extends PFT
         }
         $this->assertFalse($error);
         $json = $this->geoInst
-            ->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)
+            ->setAdapter(Ip::ADAPTER_COUNTRY)
             ->process()
             ->toJson();
         $this->assertNotEmpty($json);
@@ -416,10 +416,10 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testToCsv
-     * @covers PierInfor\GeoLite\GeoLiteIp::fromFile
-     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
-     * @covers PierInfor\GeoLite\GeoLiteIp::process
-     * @covers PierInfor\GeoLite\GeoLiteIp::toCsv
+     * @covers PierInfor\GeoLite\Ip::fromFile
+     * @covers PierInfor\GeoLite\Ip::setAdapter
+     * @covers PierInfor\GeoLite\Ip::process
+     * @covers PierInfor\GeoLite\Ip::toCsv
      */
     public function testToCsv()
     {
@@ -432,7 +432,7 @@ class GeoLiteIpTest extends PFT
         $this->assertFalse($error);
         $delimiter = ',';
         $csv = $this->geoInst
-            ->setAdapter(GeoLiteIp::ADAPTER_COUNTRY)
+            ->setAdapter(Ip::ADAPTER_COUNTRY)
             ->process()
             ->toCsv($delimiter);
         $this->assertNotEmpty($csv);
@@ -450,12 +450,12 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCityAdapter
-     * @covers PierInfor\GeoLite\GeoLiteIp::cityAdapter
+     * @covers PierInfor\GeoLite\Ip::cityAdapter
      */
     public function testCityAdapter()
     {
         $cityAdapterMethod = self::getMethod(self::ADAPTER_CITY);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY);
+        $this->geoInst->setAdapter(Ip::ADAPTER_CITY);
         $record = $cityAdapterMethod->invokeArgs(
             $this->geoInst,
             [$this->geoInst->getReader(), self::FIRST_IP]
@@ -472,12 +472,12 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCityAdapterAddressNotFound
-     * @covers PierInfor\GeoLite\GeoLiteIp::cityAdapter
+     * @covers PierInfor\GeoLite\Ip::cityAdapter
      */
     public function testCityAdapterAddressNotFound()
     {
         $cityAdapterMethod = self::getMethod(self::ADAPTER_CITY);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY);
+        $this->geoInst->setAdapter(Ip::ADAPTER_CITY);
         $record = $cityAdapterMethod->invokeArgs(
             $this->geoInst,
             [$this->geoInst->getReader(), self::IANA_IP]
@@ -490,12 +490,12 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCityAdapterInvalidArgument
-     * @covers PierInfor\GeoLite\GeoLiteIp::cityAdapter
+     * @covers PierInfor\GeoLite\Ip::cityAdapter
      */
     public function testCityAdapterInvalidArgument()
     {
         $cityAdapterMethod = self::getMethod(self::ADAPTER_CITY);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY);
+        $this->geoInst->setAdapter(Ip::ADAPTER_CITY);
         $record = $cityAdapterMethod->invokeArgs(
             $this->geoInst,
             [$this->geoInst->getReader(), self::INV_ARG]
@@ -508,12 +508,12 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCountryAdapter
-     * @covers PierInfor\GeoLite\GeoLiteIp::countryAdapter
+     * @covers PierInfor\GeoLite\Ip::countryAdapter
      */
     public function testCountryAdapter()
     {
         $countryAdapterMethod = self::getMethod(self::ADAPTER_COUNTRY);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_COUNTRY);
+        $this->geoInst->setAdapter(Ip::ADAPTER_COUNTRY);
         $record = $countryAdapterMethod->invokeArgs(
             $this->geoInst,
             [$this->geoInst->getReader(), self::FIRST_IP]
@@ -526,12 +526,12 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCountryAdapterAddressNotFound
-     * @covers PierInfor\GeoLite\GeoLiteIp::countryAdapter
+     * @covers PierInfor\GeoLite\Ip::countryAdapter
      */
     public function testCountryAdapterAddressNotFound()
     {
         $countryAdapterMethod = self::getMethod(self::ADAPTER_COUNTRY);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_COUNTRY);
+        $this->geoInst->setAdapter(Ip::ADAPTER_COUNTRY);
         $record = $countryAdapterMethod->invokeArgs(
             $this->geoInst,
             [$this->geoInst->getReader(), self::IANA_IP]
@@ -544,12 +544,12 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testCountryAdapterInvalidArgument
-     * @covers PierInfor\GeoLite\GeoLiteIp::countryAdapter
+     * @covers PierInfor\GeoLite\Ip::countryAdapter
      */
     public function testCountryAdapterInvalidArgument()
     {
         $countryAdapterMethod = self::getMethod(self::ADAPTER_COUNTRY);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_COUNTRY);
+        $this->geoInst->setAdapter(Ip::ADAPTER_COUNTRY);
         $record = $countryAdapterMethod->invokeArgs(
             $this->geoInst,
             [$this->geoInst->getReader(), self::INV_ARG]
@@ -562,12 +562,12 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testAsnAdapter
-     * @covers PierInfor\GeoLite\GeoLiteIp::asnAdapter
+     * @covers PierInfor\GeoLite\Ip::asnAdapter
      */
     public function testAsnAdapter()
     {
         $asnAdapterMethod = self::getMethod(self::ADAPTER_ASN);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_ASN);
+        $this->geoInst->setAdapter(Ip::ADAPTER_ASN);
         $record = $asnAdapterMethod->invokeArgs(
             $this->geoInst,
             [$this->geoInst->getReader(), self::FIRST_IP]
@@ -581,12 +581,12 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testAsnAdapterAddressNotFound
-     * @covers PierInfor\GeoLite\GeoLiteIp::asnAdapter
+     * @covers PierInfor\GeoLite\Ip::asnAdapter
      */
     public function testAsnAdapterAddressNotFound()
     {
         $asnAdapterMethod = self::getMethod(self::ADAPTER_ASN);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_ASN);
+        $this->geoInst->setAdapter(Ip::ADAPTER_ASN);
         $record = $asnAdapterMethod->invokeArgs(
             $this->geoInst,
             [$this->geoInst->getReader(), self::IANA_IP]
@@ -599,12 +599,12 @@ class GeoLiteIpTest extends PFT
 
     /**
      * testAsnAdapterInvalidArgument
-     * @covers PierInfor\GeoLite\GeoLiteIp::asnAdapter
+     * @covers PierInfor\GeoLite\Ip::asnAdapter
      */
     public function testAsnAdapterInvalidArgument()
     {
         $asnAdapterMethod = self::getMethod(self::ADAPTER_ASN);
-        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_ASN);
+        $this->geoInst->setAdapter(Ip::ADAPTER_ASN);
         $record = $asnAdapterMethod->invokeArgs(
             $this->geoInst,
             [$this->geoInst->getReader(), self::INV_ARG]

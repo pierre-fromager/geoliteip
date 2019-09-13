@@ -1,8 +1,10 @@
 <?php
 
-namespace PierInfor\GeoLite;
+namespace PierInfor\GeoLite\Interfaces;
 
-interface GeoLiteIpUpdaterInterface extends GeoLiteIpCommonInterface
+use PierInfor\GeoLite\Updater;
+
+interface UpdaterInterface extends CommonInterface
 {
 
     const UPDATER_URL = 'https://geolite.maxmind.com/download/geoip/database/GeoLite2-';
@@ -21,7 +23,7 @@ interface GeoLiteIpUpdaterInterface extends GeoLiteIpCommonInterface
 
     public function __construct();
 
-    public function setAdapter(string $adapter = self::ADAPTER_COUNTRY): GeoLiteIpUpdater;
+    public function setAdapter(string $adapter = self::ADAPTER_COUNTRY): Updater;
 
-    public function update(): GeoLiteIpUpdater;
+    public function update(): Updater;
 }

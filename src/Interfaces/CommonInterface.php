@@ -1,8 +1,8 @@
 <?php
 
-namespace PierInfor\GeoLite;
+namespace PierInfor\GeoLite\Interfaces;
 
-interface GeoLiteIpCommonInterface
+interface CommonInterface
 {
     const DB_PATH = '/assets/db/';
     const ADAPTER_CITY = 'cityAdapter';

@@ -1,8 +1,8 @@
 <?php
 
-namespace PierInfor\GeoLite;
+namespace PierInfor\GeoLite\Interfaces;
 
-interface GeoLiteIpFileManagerInterface
+interface FileManagerInterface
 {
 
     public function __construct();

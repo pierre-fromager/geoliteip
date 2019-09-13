@@ -3,12 +3,12 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use PierInfor\GeoLite\GeoLiteIpUpdater;
+use PierInfor\GeoLite\Updater;
 
 /**
- * @covers \PierInfor\GeoLite\GeoLiteIpUpdater::<public>
+ * @covers \PierInfor\GeoLite\Updater::<public>
  */
-class GeoLiteIpUpdaterTest extends PFT
+class UpdaterTest extends PFT
 {
     const PATH_ASSETS = 'src/assets/';
     const ASSET_IP_LIST = self::PATH_ASSETS . 'iplist.txt';
@@ -18,7 +18,7 @@ class GeoLiteIpUpdaterTest extends PFT
     /**
      * instance
      *
-     * @var GeoLiteIpUpdater
+     * @var Updater
      */
     protected $geoInst;
 
@@ -31,7 +31,7 @@ class GeoLiteIpUpdaterTest extends PFT
         if (!self::TEST_ENABLE){
             $this->markTestSkipped('Test disabled.');
         }
-        $this->geoInst = new GeoLiteIpUpdater();
+        $this->geoInst = new Updater();
     }
 
     /**
@@ -41,7 +41,7 @@ class GeoLiteIpUpdaterTest extends PFT
      */
     protected function isUpdaterInstance(): bool
     {
-        return $this->geoInst instanceof GeoLiteIpUpdater;
+        return $this->geoInst instanceof Updater;
     }
 
     /**
@@ -55,7 +55,7 @@ class GeoLiteIpUpdaterTest extends PFT
 
     /**
      * testInstance
-     * @covers PierInfor\GeoLite\GeoLiteIpUpdater::__construct
+     * @covers PierInfor\GeoLite\Updater::__construct
      */
     public function testInstance()
     {
@@ -64,7 +64,7 @@ class GeoLiteIpUpdaterTest extends PFT
 
     /**
      * testSetAdapterException
-     * @covers PierInfor\GeoLite\GeoLiteIp::setAdapter
+     * @covers PierInfor\GeoLite\Updater::setAdapter
      */
     public function testSetAdapterException()
     {
@@ -74,51 +74,51 @@ class GeoLiteIpUpdaterTest extends PFT
 
     /**
      * testSetAdapter
-     * @covers PierInfor\GeoLite\GeoLiteIpUpdater::setAdapter
+     * @covers PierInfor\GeoLite\Updater::setAdapter
      */
     public function testSetAdapter()
     {
-        $this->geoInst->setAdapter(GeoLiteIpUpdater::ADAPTER_CITY);
+        $this->geoInst->setAdapter(Updater::ADAPTER_CITY);
         $this->assertTrue($this->isUpdaterInstance());
-        $this->geoInst->setAdapter(GeoLiteIpUpdater::ADAPTER_COUNTRY);
+        $this->geoInst->setAdapter(Updater::ADAPTER_COUNTRY);
         $this->assertTrue($this->isUpdaterInstance());
-        $this->geoInst->setAdapter(GeoLiteIpUpdater::ADAPTER_ASN);
+        $this->geoInst->setAdapter(Updater::ADAPTER_ASN);
         $this->assertTrue($this->isUpdaterInstance());
     }
 
     /**
      * testClean
-     * @covers PierInfor\GeoLite\GeoLiteIpUpdater::clean
+     * @covers PierInfor\GeoLite\Updater::clean
      */
     public function testClean()
     {
         $this->geoInst->clean();
-        $this->geoInst->setAdapter(GeoLiteIpUpdater::ADAPTER_CITY);
+        $this->geoInst->setAdapter(Updater::ADAPTER_CITY);
         $this->assertTrue($this->isUpdaterInstance());
-        $this->geoInst->setAdapter(GeoLiteIpUpdater::ADAPTER_COUNTRY);
+        $this->geoInst->setAdapter(Updater::ADAPTER_COUNTRY);
         $this->assertTrue($this->isUpdaterInstance());
-        $this->geoInst->setAdapter(GeoLiteIpUpdater::ADAPTER_ASN);
+        $this->geoInst->setAdapter(Updater::ADAPTER_ASN);
         $this->assertTrue($this->isUpdaterInstance());
     }
 
     /**
      * testUpdateCity
-     * @covers PierInfor\GeoLite\GeoLiteIpUpdater::update
+     * @covers PierInfor\GeoLite\Updater::update
      */
     public function testUpdateCity()
     {
-        $this->geoInst->setAdapter(GeoLiteIpUpdater::ADAPTER_CITY)->update();
+        $this->geoInst->setAdapter(Updater::ADAPTER_CITY)->update();
         $this->assertTrue($this->isUpdaterInstance());
     }
 
     /**
      * testUpdateRequired
-     * @covers PierInfor\GeoLite\GeoLiteIpUpdater::updateRequired
+     * @covers PierInfor\GeoLite\Updater::updateRequired
      */
     public function testUpdateRequired()
     {
         $requireCityUpdate = $this->geoInst
-            ->setAdapter(GeoLiteIpUpdater::ADAPTER_CITY)
+            ->setAdapter(Updater::ADAPTER_CITY)
             ->updateRequired();
         $this->assertTrue(is_bool($requireCityUpdate));
     }
