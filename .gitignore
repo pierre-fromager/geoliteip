@@ -2,3 +2,4 @@
 /coverage/
 /src/assets/tests/sandbox/
 .php_cs.cache
+composer.lock

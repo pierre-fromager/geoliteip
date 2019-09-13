@@ -67,11 +67,63 @@ class GeoLiteIpTest extends PFT
     /**
      * testInstance
      * @covers PierInfor\GeoLiteIp::__construct
+     * @covers PierInfor\GeoLiteIp::setAdapter
      */
     public function testInstance()
     {
         $isGeoInstance = $this->geoInst instanceof GeoLiteIp;
         $this->assertTrue($isGeoInstance);
+        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_ASN);
+        $isGeoInstance = $this->geoInst instanceof GeoLiteIp;
+        $this->assertTrue($isGeoInstance);
+        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY);
+        $isGeoInstance = $this->geoInst instanceof GeoLiteIp;
+        $this->assertTrue($isGeoInstance);
+        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_COUNTRY);
+        $isGeoInstance = $this->geoInst instanceof GeoLiteIp;
+        $this->assertTrue($isGeoInstance);
+    }
+
+    /**
+     * testSetReaders
+     * @covers PierInfor\GeoLiteIp::setReaders
+     */
+    public function testSetReaders()
+    {
+        $inst = self::getMethod('setReaders')->invokeArgs(
+            $this->geoInst,
+            []
+        );
+        $this->assertTrue($inst instanceof GeoLiteIp);
+        $this->assertNotNull($this->geoInst->getReader());
+        $this->assertEquals($this->geoInst, $inst);
+    }
+
+    /**
+     * testGetHeaders
+     * @covers PierInfor\GeoLiteIp::getHeaders
+     */
+    public function testGetHeaders()
+    {
+        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_CITY);
+        $headers = self::getMethod('getHeaders')->invokeArgs(
+            $this->geoInst,
+            []
+        );
+        $this->assertEquals($headers,GeoLiteIp::HEADERS_COMMON);
+        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_ASN);
+        $headers = self::getMethod('getHeaders')->invokeArgs(
+            $this->geoInst,
+            []
+        );
+        $this->assertEquals($headers,GeoLiteIp::HEADERS_ASN);
+        $this->geoInst->setAdapter(GeoLiteIp::ADAPTER_COUNTRY);
+        $headers = self::getMethod('getHeaders')->invokeArgs(
+            $this->geoInst,
+            []
+        );
+        $this->assertTrue(is_array($headers));
+        $this->assertTrue(count($headers) == 2);
     }
 
     /**

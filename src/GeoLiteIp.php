@@ -126,12 +126,12 @@ class GeoLiteIp implements GeoLiteIpInterface
         return $this;
     }
 
-     /**
-      * update current db if required or forced
-      *
-      * @param boolean $force
-      * @return GeoLiteIpUpdater
-      */
+    /**
+     * update current db if required or forced
+     *
+     * @param boolean $force
+     * @return GeoLiteIpUpdater
+     */
     public function update(bool $force = false): GeoLiteIpUpdater
     {
         return ($this->getUpdater()->updateRequired() || $force)
@@ -294,10 +294,9 @@ class GeoLiteIp implements GeoLiteIpInterface
     /**
      * set readers, one per db file
      *
-     * @return void
-     * @codeCoverageIgnore
+     * @return GeoLiteIp
      */
-    protected function setReaders()
+    protected function setReaders(): GeoLiteIp
     {
         $this->readerCity = new Reader(
             __DIR__ . self::DB_PATH . self::DB_CITY_FILENAME,
@@ -311,13 +310,13 @@ class GeoLiteIp implements GeoLiteIpInterface
             __DIR__ . self::DB_PATH . self::DB_ASN_FILENAME,
             $this->readerLocales
         );
+        return $this;
     }
 
     /**
      * returns headers
      *
      * @return array
-     * @codeCoverageIgnore
      */
     protected function getHeaders(): array
     {
