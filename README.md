@@ -66,16 +66,6 @@ For information '...' is just a continuity marker, pls do not copy as it.
 ],
 ```
 
-* Append a new entry in autoload as below
-``` json
-"autoload": {
-    "psr-4": {
-        ...
-        "PierInfor\\": "vendor/PierInfor/GeoLiteIp/src/"
-    }
-}
-```
-
 #### Dummy app
 
 From the root of the project, create a src folder then a file app.php inside.
