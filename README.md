@@ -77,7 +77,7 @@ Copy paste the code below in app.php
 
 namespace Company\MyApp;
 
-use PierInfor\GeoLiteIp;
+use PierInfor\GeoLite\GeoLiteIp;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
