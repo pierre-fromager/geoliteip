@@ -35,10 +35,15 @@ Geoliteip is a php tool to use and manage maxmind GeoLite2 free databases in mmd
 
 ## Composer 
 
-### Facilities
+### Facilities run
 
-* run test (pass tests and generate coverage in html format)
-* run lint (lint the code).
+* test (pass all tests).
+* coverage (pass all tests with coverage).
+* testIp (run IpTest only).
+* testDownloader (run DownloaderTest only).
+* testFileManager (run FileManagerTest only).
+* testUpdater (run UpdaterTest only).
+* lint (check and fix source errors).
 
 ### Integration
 
@@ -49,6 +54,7 @@ For information '...' is just a continuity marker, pls do not copy as it.
 Add as below :
 
 * the required packages
+
 ``` json
 "require": {
     ...
@@ -57,6 +63,7 @@ Add as below :
 ```
 
 * the package definition
+
 ``` json
 "repositories": [
     ...
@@ -68,6 +75,7 @@ Add as below :
 ```
 
 * the script to run update/download on post install (WIP...untested not ready yet)
+
 ``` json
 "scripts": {
     ...
@@ -122,10 +130,13 @@ unset($geoInst);
 ```
 
 From the root of the project running
+
 ``` bash
 php ./src/app.php
 ```
+
 Should be immediate with no errors and display messages as below
+
 ``` bash
 Begin update @1568318808.9869
 End   update @1568318808.9871
@@ -150,6 +161,7 @@ Scanning ipv4 82.66.36.214
     }
 ]
 ```
+
 Changing forceUpdate to true will force update with the same display but with an elapsed time bit longer.
 
 You can figure out the accuracy changing from ipv4 to ipv6.
@@ -158,7 +170,7 @@ You can figure out the accuracy changing from ipv4 to ipv6.
 
 Sometimes from an existing clone when pulling you have to update autoload.
 
-```
+``` 
 composer dump-autoload
 ```
 

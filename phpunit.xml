@@ -1,4 +1,28 @@
 <phpunit colors="true" strict="true">
+    <testsuites>
+        <testsuite name="all">
+            <file>tests/DownloaderTest.php</file>
+            <file>tests/FileManagerTest.php</file>
+            <file>tests/UpdaterTest.php</file>
+            <file>tests/IpTest.php</file>
+        </testsuite>
+        <testsuite name="Downloader">
+            <directory>tests</directory>
+            <file>tests/DownloaderTest.php</file>
+        </testsuite>
+        <testsuite name="Ip">
+            <directory>tests</directory>
+            <file>tests/IpTest.php</file>
+        </testsuite>
+        <directory>tests</directory>
+        <testsuite name="FileManager">
+            <file>tests/FileManagerTest.php</file>
+        </testsuite>
+        <testsuite name="Updater">
+            <directory>tests</directory>
+            <file>tests/UpdaterTest.php</file>
+        </testsuite>
+    </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>

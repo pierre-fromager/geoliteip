@@ -1,7 +1,12 @@
 {
     "name": "PierInfor/GeoLiteIp",
     "description": "Pier-Infor Geoliteip.",
-    "keywords": ["php", "geoip", "maxmind", "free"],
+    "keywords": [
+        "php",
+        "geoip",
+        "maxmind",
+        "free"
+    ],
     "license": "GNU3",
     "type": "project",
     "version": "1.0",
@@ -22,11 +27,29 @@
         "preferred-install": "dist"
     },
     "scripts": {
-        "test": [
+        "coverage": [
             "phpunit --coverage-html='./coverage' --bootstrap tests/bootstrap.php tests"
+        ],
+        "test": [
+            "phpunit --bootstrap tests/bootstrap.php tests"
+        ],
+        "testDownloader": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite Downloader"
+        ],
+        "testFileManager": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite FileManager"
+        ],
+        "testUpdater": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite Updater"
+        ],
+        "testIp": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite Ip"
         ],
         "lint": [
             "phpcbf --standard=PSR2 --warning-severity=0 --extensions=php src/*"
+        ],
+        "post-install-cmd": [
+            "PierInfor\\GeoLite\\Installer::postInstall"
         ]
     }
 }
