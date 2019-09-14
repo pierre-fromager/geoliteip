@@ -3,6 +3,7 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
+use PierInfor\GeoLite\FileManager;
 use PierInfor\GeoLite\Updater;
 
 /**
@@ -10,10 +11,11 @@ use PierInfor\GeoLite\Updater;
  */
 class UpdaterTest extends PFT
 {
+
+    const TEST_ENABLE = true;
     const PATH_ASSETS = 'src/assets/';
     const ASSET_IP_LIST = self::PATH_ASSETS . 'iplist.txt';
     const FIRST_IP = '104.37.188.20';
-    const TEST_ENABLE = true;
 
     /**
      * instance
@@ -60,6 +62,18 @@ class UpdaterTest extends PFT
     public function testInstance()
     {
         $this->assertTrue($this->isUpdaterInstance());
+    }
+
+    /**
+     * testGetFileManager
+     * @covers PierInfor\GeoLite\Updater::getFileManager
+     */
+    public function testGetFileManager()
+    {
+        $res = $this->geoInst->getFileManager();
+        $this->assertTrue(
+            $this->geoInst->getFileManager() instanceof FileManager
+        );
     }
 
     /**

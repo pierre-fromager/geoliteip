@@ -46,7 +46,9 @@ To play with GeoLiteIp from your own projects, adjust your composer.json as belo
 
 For information '...' is just a continuity marker, pls do not copy as it.
 
-* Add as below the required packages
+Add as below :
+
+* the required packages
 ``` json
 "require": {
     ...
@@ -54,7 +56,7 @@ For information '...' is just a continuity marker, pls do not copy as it.
 }	
 ```
 
-* Add as below the package definition
+* the package definition
 ``` json
 "repositories": [
     ...
@@ -63,6 +65,16 @@ For information '...' is just a continuity marker, pls do not copy as it.
         "url": "https://github.com/pierre-fromager/geoliteip.git"
     }
 ],
+```
+
+* the script to run update/download on post install (WIP...untested not ready yet)
+``` json
+"scripts": {
+    ...
+    "post-install-cmd": [
+        "PierInfor\\GeoLite\\Installer::postInstall"
+    ]
+}
 ```
 
 #### Dummy app

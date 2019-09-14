@@ -26,4 +26,10 @@ interface UpdaterInterface extends CommonInterface
     public function setAdapter(string $adapter = self::ADAPTER_COUNTRY): Updater;
 
     public function update(): Updater;
+
+    public function updateRequired(): bool;
+
+    public function dbFilename(): string;
+
+    public function clean(): Updater;
 }

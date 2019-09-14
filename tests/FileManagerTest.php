@@ -4,6 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
 use PierInfor\GeoLite\FileManager;
+use PierInfor\GeoLite\Downloader;
 
 /**
  * @covers \PierInfor\GeoLite\FileManager::<public>
@@ -11,6 +12,7 @@ use PierInfor\GeoLite\FileManager;
 class FileManagerTest extends PFT
 {
 
+    const TEST_ENABLE = true;
     const RANDOM_KEYS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const PATH_ASSETS = 'src/assets/';
     const PATH_ASSETS_DB = self::PATH_ASSETS . 'db/';
@@ -24,14 +26,13 @@ class FileManagerTest extends PFT
     const TGZ_TEMPLATE_BAD_FILE = 'bad.tar.gz';
     const TAR_TEMPLATE_FILE = 'test.tar';
     const TAR_TEMPLATE_BAD_FILE = 'bad.tar';
-    const TEST_ENABLE = true;
 
     /**
      * instance
      *
      * @var FileManager
      */
-    protected $geoInst;
+    protected $instance;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -42,7 +43,7 @@ class FileManagerTest extends PFT
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
         }
-        $this->geoInst = new FileManager();
+        $this->instance = new FileManager();
         $this->cleanSandbox();
     }
 
@@ -52,8 +53,8 @@ class FileManagerTest extends PFT
      * @return void
      */
     protected function cleanSandbox(){
-        $this->geoInst->unlinkFolders(self::PATH_ASSETS_TESTS_SANDBOX . '*');
-        $this->geoInst->unlinkFiles(self::PATH_ASSETS_TESTS_SANDBOX . '*');
+        $this->instance->unlinkFolders(self::PATH_ASSETS_TESTS_SANDBOX . '*');
+        $this->instance->unlinkFiles(self::PATH_ASSETS_TESTS_SANDBOX . '*');
         if (!file_exists(self::PATH_ASSETS_TESTS_SANDBOX)) {
             mkdir(self::PATH_ASSETS_TESTS_SANDBOX);
         }
@@ -65,7 +66,7 @@ class FileManagerTest extends PFT
      */
     protected function tearDown()
     {
-        $this->geoInst = null;
+        $this->instance = null;
     }
 
     /**
@@ -120,8 +121,19 @@ class FileManagerTest extends PFT
      */
     public function testInstance()
     {
-        $isGeoInstance = $this->geoInst instanceof \PierInfor\GeoLite\FileManager;
+        $isGeoInstance = $this->instance instanceof FileManager;
         $this->assertTrue($isGeoInstance);
+    }
+
+    /**
+     * testGetDownloader
+     * @covers PierInfor\GeoLite\FileManager::getDownloader
+     */
+    public function testGetDownloader()
+    {
+        $this->assertTrue(
+            $this->instance->getDownloader() instanceof Downloader
+        );
     }
 
     /**
@@ -130,7 +142,7 @@ class FileManagerTest extends PFT
      */
     public function testDownload()
     {
-        $this->geoInst->download(self::DL_URL, self::DL_TARGET_FILE);
+        $this->instance->download(self::DL_URL, self::DL_TARGET_FILE);
         $fileExtist = file_exists(self::DL_TARGET_FILE);
         $this->assertTrue($fileExtist);
         if ($fileExtist) {
@@ -145,13 +157,13 @@ class FileManagerTest extends PFT
     public function testFolderList()
     {
         $this->assertEmpty(
-            $this->geoInst->folderList(self::PATH_ASSETS_DB)
+            $this->instance->folderList(self::PATH_ASSETS_DB)
         );
         $this->assertTrue(
-            is_array($this->geoInst->folderList(self::PATH_ASSETS))
+            is_array($this->instance->folderList(self::PATH_ASSETS))
         );
         $this->assertNotEmpty(
-            $this->geoInst->folderList(self::PATH_ASSETS)
+            $this->instance->folderList(self::PATH_ASSETS)
         );
     }
 
@@ -161,7 +173,7 @@ class FileManagerTest extends PFT
      */
     public function testFileDate()
     {
-        $fileDate = $this->geoInst->fileDate(
+        $fileDate = $this->instance->fileDate(
             self::PATH_ASSETS_TESTS_TEMPLATE . self::TGZ_TEMPLATE_FILE
         );
         $validator = '/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/';
@@ -175,16 +187,16 @@ class FileManagerTest extends PFT
      */
     public function testIsFileDateToday()
     {
-        $isTodayFile = $this->geoInst->isFileDateToday(
+        $isTodayFile = $this->instance->isFileDateToday(
             self::PATH_ASSETS_TESTS_TEMPLATE . self::TGZ_TEMPLATE_FILE
         );
         $this->assertFalse($isTodayFile);
-        $copyResult = $this->geoInst->copyFile(
+        $copyResult = $this->instance->copyFile(
             self::PATH_ASSETS_TESTS_TEMPLATE . self::TGZ_TEMPLATE_FILE,
             self::PATH_ASSETS_TESTS_SANDBOX . self::TGZ_TEMPLATE_FILE
         );
         $this->assertTrue($copyResult);
-        $isTodayFile = $this->geoInst->isFileDateToday(
+        $isTodayFile = $this->instance->isFileDateToday(
             self::PATH_ASSETS_TESTS_SANDBOX . self::TGZ_TEMPLATE_FILE
         );
         $this->assertTrue($isTodayFile);
@@ -209,7 +221,7 @@ class FileManagerTest extends PFT
         }
         // Unlink random files by mask
         for ($c = 0; $c < $extsCount; $c++) {
-            $this->geoInst->unlinkFiles(
+            $this->instance->unlinkFiles(
                 self::PATH_ASSETS_TESTS_SANDBOX . self::UNLINK_EXTS[$c]
             );
         }
@@ -225,7 +237,7 @@ class FileManagerTest extends PFT
     {
         $folderName = self::PATH_ASSETS_TESTS_SANDBOX . 'toDelete/';
         $this->genRandSubFolder($folderName);
-        $this->geoInst->deleteFolder($folderName);
+        $this->instance->deleteFolder($folderName);
         $this->assertEmpty(glob($folderName, GLOB_ONLYDIR));
     }
 
@@ -235,7 +247,7 @@ class FileManagerTest extends PFT
      */
     public function testFileList()
     {
-        $fileList = $this->geoInst->fileList(self::PATH_ASSETS_TESTS_TEMPLATE);
+        $fileList = $this->instance->fileList(self::PATH_ASSETS_TESTS_TEMPLATE);
         $this->assertTrue(is_array($fileList));
         $this->assertNotEmpty($fileList);
     }
@@ -250,7 +262,7 @@ class FileManagerTest extends PFT
         foreach ($folderNameList as $folder) {
             $this->genRandSubFolder(self::PATH_ASSETS_TESTS_SANDBOX . $folder);
         }
-        $this->geoInst->unlinkFolders(self::PATH_ASSETS_TESTS_SANDBOX);
+        $this->instance->unlinkFolders(self::PATH_ASSETS_TESTS_SANDBOX);
         $folderList = glob(self::PATH_ASSETS_TESTS_SANDBOX . '*', GLOB_ONLYDIR);
         $this->assertEmpty($folderList);
     }
@@ -265,7 +277,7 @@ class FileManagerTest extends PFT
             self::PATH_ASSETS_TESTS_SANDBOX . self::TGZ_TEMPLATE_FILE
         );
         $this->assertFalse($existBefore);
-        $copyResult = $this->geoInst->copyFile(
+        $copyResult = $this->instance->copyFile(
             self::PATH_ASSETS_TESTS_TEMPLATE . self::TGZ_TEMPLATE_FILE,
             self::PATH_ASSETS_TESTS_SANDBOX . self::TGZ_TEMPLATE_FILE
         );
@@ -290,7 +302,7 @@ class FileManagerTest extends PFT
             self::PATH_ASSETS_TESTS_SANDBOX . self::TGZ_TEMPLATE_FILE
         );
         $this->assertFalse($existBefore);
-        $copyResult = $this->geoInst->copyFile(
+        $copyResult = $this->instance->copyFile(
             self::PATH_ASSETS_TESTS_TEMPLATE . self::TGZ_TEMPLATE_FILE,
             self::PATH_ASSETS_TESTS_SANDBOX . self::TGZ_TEMPLATE_FILE
         );
@@ -299,7 +311,7 @@ class FileManagerTest extends PFT
         );
         $this->assertTrue($existAfter);
         $this->assertTrue($copyResult);
-        $ungzResult = $this->geoInst->ungz(
+        $ungzResult = $this->instance->ungz(
             self::PATH_ASSETS_TESTS_SANDBOX . self::TGZ_TEMPLATE_FILE
         );
         $tarExist = file_exists(self::PATH_ASSETS_TESTS_SANDBOX . self::TAR_TEMPLATE_FILE);
@@ -313,7 +325,7 @@ class FileManagerTest extends PFT
      */
     public function testUngzNotFound()
     {
-        $ungzResult = $this->geoInst->ungz('');
+        $ungzResult = $this->instance->ungz('');
         $this->assertFalse($ungzResult);
     }
 
@@ -323,13 +335,13 @@ class FileManagerTest extends PFT
      */
     public function testUngzMalformed()
     {
-        $copyResult = $this->geoInst->copyFile(
+        $copyResult = $this->instance->copyFile(
             self::PATH_ASSETS_TESTS_TEMPLATE . self::TGZ_TEMPLATE_BAD_FILE,
             self::PATH_ASSETS_TESTS_SANDBOX . self::TGZ_TEMPLATE_BAD_FILE
         );
         $this->assertTrue($copyResult);
         $this->expectException(\Exception::class);
-        $ungzResult = $this->geoInst->ungz(
+        $ungzResult = $this->instance->ungz(
             self::PATH_ASSETS_TESTS_SANDBOX . self::TGZ_TEMPLATE_BAD_FILE
         );
         $this->assertFalse($ungzResult);
@@ -353,30 +365,30 @@ class FileManagerTest extends PFT
             time(),
             self::TGZ_TEMPLATE_FILE
         );
-        $copyResult = $this->geoInst->copyFile(
+        $copyResult = $this->instance->copyFile(
             self::PATH_ASSETS_TESTS_TEMPLATE . self::TGZ_TEMPLATE_FILE,
             $tgzTarget
         );
         $this->assertTrue($copyResult);
         $tgzExists = file_exists($tgzTarget);
         $this->assertTrue($tgzExists);
-        $ungzResult = $this->geoInst->ungz($tgzTarget);
+        $ungzResult = $this->instance->ungz($tgzTarget);
         $this->assertTrue($ungzResult);
         $tarFilename = substr(basename($tgzTarget), 0, -3);
         $this->assertTrue(
             file_exists(self::PATH_ASSETS_TESTS_SANDBOX . $tarFilename)
         );
-        $untarResult = $this->geoInst->untar(
+        $untarResult = $this->instance->untar(
             self::PATH_ASSETS_TESTS_SANDBOX . $tarFilename,
             self::PATH_ASSETS_TESTS_SANDBOX
         );
         $this->assertTrue($untarResult);
-        $result = $this->geoInst->untar(
+        $result = $this->instance->untar(
             '',
             self::PATH_ASSETS_TESTS_SANDBOX
         );
         $this->assertFalse($result);
-        $result = $this->geoInst->untar(
+        $result = $this->instance->untar(
             self::PATH_ASSETS_TESTS_SANDBOX . $tarFilename,
             ''
         );

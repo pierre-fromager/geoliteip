@@ -44,6 +44,16 @@ class Updater implements Interfaces\UpdaterInterface
     }
 
     /**
+     * returns FileManager instance
+     *
+     * @return FileManager
+     */
+    public function getFileManager(): FileManager
+    {
+        return $this->fileManager;
+    }
+
+    /**
      * set adapter
      *
      * @param string $adapter
@@ -111,9 +121,9 @@ class Updater implements Interfaces\UpdaterInterface
     /**
      * clean unnattended files and folders in db path
      *
-     * @return void
+     * @return Updater
      */
-    public function clean()
+    public function clean(): Updater
     {
         $this->fileManager->unlinkFolders(self::ABS_DB_PATH);
         $extCount = count(self::CLEAN_DB_EXTS);
@@ -122,5 +132,6 @@ class Updater implements Interfaces\UpdaterInterface
                 self::ABS_DB_PATH . self::CLEAN_DB_EXTS[$c]
             );
         }
+        return $this;
     }
 }

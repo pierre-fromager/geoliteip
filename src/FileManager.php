@@ -2,27 +2,27 @@
 
 namespace PierInfor\GeoLite;
 
-use GuzzleHttp\Client;
+use PierInfor\GeoLite\Downloader;
 
 /**
- * GeoLiteIpFileManager class to manage files
+ * FileManager class to manage files
  */
 class FileManager implements Interfaces\FileManagerInterface
 {
 
     /**
-     * Http client
+     * Downloader instance
      *
-     * @var GuzzleHttp\Client
+     * @var Downloader
      */
-    private $client;
+    private $downloader;
 
     /**
      * Instanciate
      */
     public function __construct()
     {
-        $this->client = new Client();
+        $this->downloader = new Downloader();
     }
 
     /**
@@ -34,16 +34,26 @@ class FileManager implements Interfaces\FileManagerInterface
     }
 
     /**
-     * download a file from an url to a given filename
+     * returns downloader instance
+     *
+     * @return Downloader
+     */
+    public function getDownloader(): Downloader
+    {
+        return $this->downloader;
+    }
+
+    /**
+     * download a file for a given url and filename
      *
      * @param string $url
      * @param string $toFilename
-     * @return void
+     * @return FileManager
      */
-    public function download(string $url, string $toFilename)
+    public function download(string $url, string $toFilename): FileManager
     {
-        $dlOpt = ['save_to' => $toFilename];
-        $this->client->get($url, $dlOpt);
+        $this->downloader->guzzleDownload($url, $toFilename);
+        return $this;
     }
 
     /**
