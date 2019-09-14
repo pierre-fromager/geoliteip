@@ -135,6 +135,7 @@ class FileManager implements Interfaces\FileManagerInterface
      */
     public function fileDate(string $path): string
     {
+        clearstatcache();
         return date('Y-m-d', filemtime($path));
     }
 

@@ -154,9 +154,17 @@ Changing forceUpdate to true will force update with the same display but with an
 
 You can figure out the accuracy changing from ipv4 to ipv6.
 
+## Quickfix issues
+
+Sometimes from an existing clone when pulling you have to update autoload.
+
+```
+composer dump-autoload
+```
+
 ## Todo
 
 * Implement input arguments to read stdin.
-* Remove the db files from assets and run update with Composer PostInstall scripts.
+* (WIP) Remove the db files from assets and run update with Composer PostInstall scripts.
 * Find a good php documentation generator...
 

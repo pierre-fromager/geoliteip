@@ -187,10 +187,6 @@ class FileManagerTest extends PFT
      */
     public function testIsFileDateToday()
     {
-        $isTodayFile = $this->instance->isFileDateToday(
-            self::PATH_ASSETS_TESTS_TEMPLATE . self::TGZ_TEMPLATE_FILE
-        );
-        $this->assertFalse($isTodayFile);
         $copyResult = $this->instance->copyFile(
             self::PATH_ASSETS_TESTS_TEMPLATE . self::TGZ_TEMPLATE_FILE,
             self::PATH_ASSETS_TESTS_SANDBOX . self::TGZ_TEMPLATE_FILE
@@ -200,6 +196,15 @@ class FileManagerTest extends PFT
             self::PATH_ASSETS_TESTS_SANDBOX . self::TGZ_TEMPLATE_FILE
         );
         $this->assertTrue($isTodayFile);
+        $fileDateChangeOlder = strtotime("23 April 2005");
+        @touch(
+            self::PATH_ASSETS_TESTS_SANDBOX . self::TGZ_TEMPLATE_FILE,
+            $fileDateChangeOlder
+        );
+        $isTodayFile = $this->instance->isFileDateToday(
+            self::PATH_ASSETS_TESTS_SANDBOX . self::TGZ_TEMPLATE_FILE
+        );
+        $this->assertFalse($isTodayFile);
     }
 
     /**
