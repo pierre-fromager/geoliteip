@@ -52,7 +52,7 @@ class FileManager implements Interfaces\FileManagerInterface
      */
     public function download(string $url, string $toFilename): FileManager
     {
-        $this->downloader->guzzleDownload($url, $toFilename);
+        $this->downloader->download($url, $toFilename);
         return $this;
     }
 

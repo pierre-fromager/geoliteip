@@ -9,6 +9,12 @@ use GuzzleHttp\Client;
  */
 class Downloader implements Interfaces\DownloaderInterface
 {
+    /**
+     * factory adapter
+     *
+     * @var String
+     */
+    private $adapter;
 
     /**
      * Http client
@@ -38,6 +44,7 @@ class Downloader implements Interfaces\DownloaderInterface
     {
         $this->showProgress = false;
         $this->client = new Client();
+        $this->setAdapter();
     }
 
     /**
@@ -46,6 +53,44 @@ class Downloader implements Interfaces\DownloaderInterface
     public function __destruct()
     {
         $this->client  = null;
+    }
+
+    /**
+     * set adapter for download factory
+     *
+     * @param string $adapter
+     * @return Downloader
+     */
+    public function setAdapter(string $adapter = self::ADAPTER_GUZZLE): Downloader
+    {
+        if (!in_array($adapter, self::ADAPTERS)) {
+            throw new \Exception('Downloader - bad adapter');
+        }
+        $this->adapter = $adapter;
+        return $this;
+    }
+
+    /**
+     * download factory
+     *
+     * @param string $url
+     * @param string $toFilename
+     * @return Downloader
+     */
+    public function download(string $url, string $toFilename): Downloader
+    {
+        switch ($this->adapter) {
+            case self::ADAPTER_GUZZLE:
+                $this->guzzleDownload($url, $toFilename);
+                break;
+            case self::ADAPTER_CONTENTS:
+                $this->contentsDownload($url, $toFilename);
+                break;
+            case self::ADAPTER_CURL:
+                $this->curlDownload($url, $toFilename);
+                break;
+        }
+        return $this;
     }
 
     /**
@@ -58,6 +103,19 @@ class Downloader implements Interfaces\DownloaderInterface
     public function guzzleDownload(string $url, string $toFilename): Downloader
     {
         $this->client->get($url, ['save_to' => $toFilename]);
+        return $this;
+    }
+
+    /**
+     * download a file using file_get_content
+     *
+     * @param string $url
+     * @param string $toFilename
+     * @return Downloader
+     */
+    public function contentsDownload(string $url, string $toFilename): Downloader
+    {
+        file_put_contents($toFilename, file_get_contents($url));
         return $this;
     }
 
@@ -82,18 +140,29 @@ class Downloader implements Interfaces\DownloaderInterface
      */
     public function curlDownload(string $url, string $toFilename): Downloader
     {
-        $fp = fopen($toFilename, 'w');
+        touch($toFilename, 0777);
+        $fp = fopen($toFilename, 'wba+');
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 0);
         curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_BUFFERSIZE, self::BUFFER_SIZE);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, [$this, self::DOWNLOAD_CALLBACK]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_NOPROGRESS, false);
+        curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, [$this, self::DOWNLOAD_CALLBACK]);
         curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_AUTOREFERER, true);
         curl_setopt($ch, CURLOPT_USERAGENT, self::USER_AGENT);
-        curl_exec($ch);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+        curl_setopt($ch, CURLOPT_VERBOSE, false);
+        $datas = curl_exec($ch);
         curl_close($ch);
+        fwrite($fp, $datas);
         fclose($fp);
         return $this;
     }
@@ -113,7 +182,7 @@ class Downloader implements Interfaces\DownloaderInterface
         if ($download_size > 0) {
             $this->progress = ($downloaded / $download_size) * 100;
             if ($this->showProgress === true) {
-                echo $this->getProgress() . "%\n";
+                echo $this->getProgress() . "%\r";
             }
         }
     }
