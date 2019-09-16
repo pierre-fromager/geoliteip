@@ -2,23 +2,22 @@
 
 namespace PierInfor\GeoLite;
 
-use Composer\Script\Event;
 use PierInfor\GeoLite\Updater;
 
 class Installer
 {
+
+
 
     /**
      * postInstall
      *
      * provides access to the current Composer instance
      * run any post install tasks here
-     *
-     * @param Composer\Script\Event $event
      */
-    public static function postInstall(Event $event)
+    public static function postInstall()
     {
-        //$composer = $event->getComposer();
+        echo "\n";
         $updater = new Updater();
         $updater
             ->getFileManager()

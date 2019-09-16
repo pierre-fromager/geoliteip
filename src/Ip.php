@@ -93,7 +93,6 @@ class Ip implements Interfaces\IpInterface
      * free when unset instance
      *
      * @return void
-     * @codeCoverageIgnore
      */
     public function __destruct()
     {

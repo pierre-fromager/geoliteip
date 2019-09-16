@@ -5,6 +5,7 @@
             <file>tests/FileManagerTest.php</file>
             <file>tests/UpdaterTest.php</file>
             <file>tests/IpTest.php</file>
+            <file>tests/InstallerTest.php</file>
         </testsuite>
         <testsuite name="Downloader">
             <directory>tests</directory>
@@ -21,6 +22,10 @@
         <testsuite name="Updater">
             <directory>tests</directory>
             <file>tests/UpdaterTest.php</file>
+        </testsuite>
+        <testsuite name="Installer">
+            <directory>tests</directory>
+            <file>tests/InstallerTest.php</file>
         </testsuite>
     </testsuites>
     <filter>

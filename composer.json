@@ -9,7 +9,7 @@
     ],
     "license": "GNU3",
     "type": "project",
-    "version": "1.0",
+    "version": "1.0.1",
     "require": {
         "geoip2/geoip2": "~2.0"
     },
@@ -43,6 +43,9 @@
         ],
         "testIp": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite Ip"
+        ],
+        "testInstaller": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite Installer"
         ],
         "lint": [
             "phpcbf --standard=PSR2 --warning-severity=0 --extensions=php src/*"

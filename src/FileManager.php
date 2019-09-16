@@ -61,6 +61,7 @@ class FileManager implements Interfaces\FileManagerInterface
      *
      * @param string $tgzFilename
      * @return boolean
+     * @throws \Exception  
      */
     public function ungz(string $tgzFilename): bool
     {
@@ -68,7 +69,13 @@ class FileManager implements Interfaces\FileManagerInterface
         if (empty($tgzFilename) || !file_exists($tgzFilename)) {
             return $result;
         }
-        (new \PharData($tgzFilename))->decompress();
+        try {
+            (new \PharData($tgzFilename))->decompress();
+        } catch (\Exception $e) {
+            if ($e instanceof \UnexpectedValueException) {
+                throw new \Exception('Malformed gzip');
+            }
+        }
         return true;
     }
 
@@ -83,7 +90,8 @@ class FileManager implements Interfaces\FileManagerInterface
      */
     public function untar(string $tarFilename, string $targetFolder): bool
     {
-        if (empty($tarFilename)
+        if (
+            empty($tarFilename)
             || empty($targetFolder)
             || !file_exists($tarFilename)
         ) {
