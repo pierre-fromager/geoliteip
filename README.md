@@ -8,7 +8,7 @@ Geoliteip is a php tool to use and manage maxmind GeoLite2 free databases in mmd
 * change db on the fly without re-instanciate.
 * input ip list from plain text file.
 * output as array, json, csv.
-* update dbs on the fly.
+* update dbs on the fly or from composer.
 
 ### Pro
 
@@ -23,20 +23,22 @@ Geoliteip is a php tool to use and manage maxmind GeoLite2 free databases in mmd
 ## Dependencies
 
 * geoip2/geoip2
-* guzzlehttp/guzzle
 
 ## Testing & Coverage
 
+* before running tests install db doing
+```
+composer run db
+```
 * require xdebug to enable coverage.
-* tested with phpunit.
 * tests all passed with php version >= 7.0.
 * /!\\ running tests makes real db update from maxmind, do not abuse because of 503.
-* TEST_ENABLE constant let you enable or disable one or more test case.
 
 ## Composer 
 
 ### Facilities run
 
+* db (download and install db in assets db).
 * test (pass all tests).
 * coverage (pass all tests with coverage).
 * testIp (run IpTest only).
@@ -74,12 +76,13 @@ Add as below :
 ],
 ```
 
-* the script to run update/download on post install (WIP...untested not ready yet)
+* the script to run update/download on post install
 
 ``` json
 "scripts": {
     ...
     "post-install-cmd": [
+        ...
         "PierInfor\\GeoLite\\Installer::postInstall"
     ]
 }
@@ -115,9 +118,10 @@ require_once 'vendor/autoload.php';
 $geoInst = new Ip();
 $forceUpdate = false;
 echo 'Begin update @' . microtime(true) . "\n";
-$geoInst->setAdapter(Ip::ADAPTER_ASN)->update($forceUpdate);
-$geoInst->setAdapter(Ip::ADAPTER_COUNTRY)->update($forceUpdate);
-$geoInst->setAdapter(Ip::ADAPTER_CITY)->update($forceUpdate);
+$geoInst
+    ->setAdapter(Ip::ADAPTER_ASN)->update($forceUpdate)
+    ->setAdapter(Ip::ADAPTER_COUNTRY)->update($forceUpdate)
+    ->setAdapter(Ip::ADAPTER_CITY)->update($forceUpdate);
 echo 'End   update @' . microtime(true) . "\n";
 $ipv6ToCheck = '2a01:e35:2422:4d60:2ad2:44ff:fe06:2983';
 $ipv4ToCheck = '82.66.36.214';
@@ -177,6 +181,4 @@ composer dump-autoload
 ## Todo
 
 * Implement input arguments to read stdin.
-* (WIP) Remove the db files from assets and run update with Composer PostInstall scripts.
 * Find a good php documentation generator...
-
