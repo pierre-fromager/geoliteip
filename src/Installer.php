@@ -7,8 +7,6 @@ use PierInfor\GeoLite\Updater;
 class Installer
 {
 
-
-
     /**
      * postInstall
      *
@@ -18,6 +16,7 @@ class Installer
     public static function postInstall()
     {
         echo "\n";
+        $error = false;
         $updater = new Updater();
         $updater
             ->getFileManager()
@@ -26,11 +25,18 @@ class Installer
             ->displayProgress(true);
         self::ouput('Update maxmind databases started');
         self::ouput('Updating city');
-        $updater->setAdapter(Updater::ADAPTER_CITY)->update();
-        self::ouput('Updating country');
-        $updater->setAdapter(Updater::ADAPTER_COUNTRY)->update();
-        self::ouput('Updating asn');
-        $updater->setAdapter(Updater::ADAPTER_ASN)->update();
+        try {
+            $updater->setAdapter(Updater::ADAPTER_CITY)->update();
+        } catch (\Exception $e) {
+            $error = true;
+            self::ouput('Download from maxmind failed');
+        }
+        if (!$error) {
+            self::ouput('Updating country');
+            $updater->setAdapter(Updater::ADAPTER_COUNTRY)->update();
+            self::ouput('Updating asn');
+            $updater->setAdapter(Updater::ADAPTER_ASN)->update();
+        }
         self::ouput('Update maxmind databases finished');
     }
 
