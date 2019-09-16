@@ -32,7 +32,7 @@ composer run db
 ```
 * require xdebug to enable coverage.
 * tests all passed with php version >= 7.0.
-* /!\\ running tests makes real db update from maxmind, do not abuse because of 503.
+* /!\\ updater tests makes real db update from maxmind, abusing leads to a 503.
 
 ## Composer 
 
@@ -166,17 +166,9 @@ Scanning ipv4 82.66.36.214
 ]
 ```
 
-Changing forceUpdate to true will force update with the same display but with an elapsed time bit longer.
+Changing forceUpdate to true will force update in silent mode.
 
-You can figure out the accuracy changing from ipv4 to ipv6.
-
-## Quickfix issues
-
-Sometimes from an existing clone when pulling you have to update autoload.
-
-``` 
-composer dump-autoload
-```
+You can figure out the accuracy changing from ipv4 to ipv6 for the same location.
 
 ## Todo
 
