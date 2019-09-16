@@ -15,15 +15,18 @@ interface DownloaderInterface
     const ADAPTER_CURL = 'curl';
     const ADAPTER_GUZZLE = 'guzzle';
     const ADAPTER_CONTENTS = 'contents';
-    const ADAPTERS = [self::ADAPTER_CURL, self::ADAPTER_CONTENTS, self::ADAPTER_GUZZLE];
+    const ADAPTERS = [self::ADAPTER_CURL, self::ADAPTER_CONTENTS];
+    const WHEELS = '/-\|';
 
     public function __construct();
 
     public function __destruct();
 
-    public function guzzleDownload(string $url, string $toFilename): Downloader;
-
     public function displayProgress(bool $show = false): Downloader;
 
     public function curlDownload(string $url, string $toFilename): Downloader;
+
+    public function contentsDownload(string $url, string $toFilename): Downloader;
+
+    public function download(string $url, string $toFilename): Downloader;
 }

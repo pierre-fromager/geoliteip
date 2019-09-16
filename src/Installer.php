@@ -5,9 +5,6 @@ namespace PierInfor\GeoLite;
 use Composer\Script\Event;
 use PierInfor\GeoLite\Updater;
 
-# Dirty Bugfix Guzzle from Composer for missing choose_handler error
-require 'vendor/guzzlehttp/guzzle/src/functions.php';
-
 class Installer
 {
 
@@ -29,11 +26,11 @@ class Installer
             ->setAdapter(Downloader::ADAPTER_CURL)
             ->displayProgress(true);
         self::ouput('Update maxmind databases started');
-        self::ouput('Updating city ', false);
+        self::ouput('Updating city');
         $updater->setAdapter(Updater::ADAPTER_CITY)->update();
-        self::ouput('Updating country ', false);
+        self::ouput('Updating country');
         $updater->setAdapter(Updater::ADAPTER_COUNTRY)->update();
-        self::ouput('Updating asn ', false);
+        self::ouput('Updating asn');
         $updater->setAdapter(Updater::ADAPTER_ASN)->update();
         self::ouput('Update maxmind databases finished');
     }
@@ -46,6 +43,6 @@ class Installer
      */
     protected static function ouput(string $msg, $newline = true)
     {
-        echo sprintf('     %s - %s.%s', date('H:i:s'), $msg, ($newline) ? "\n" : '');
+        echo sprintf('%s - %s.%s', date('H:i:s'), $msg, ($newline) ? "\n" : '');
     }
 }

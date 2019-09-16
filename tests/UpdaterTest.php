@@ -13,7 +13,7 @@ class UpdaterTest extends PFT
 {
 
     const TEST_ENABLE = true;
-    const PATH_ASSETS = 'src/assets/';
+    const PATH_ASSETS = 'assets/';
     const ASSET_IP_LIST = self::PATH_ASSETS . 'iplist.txt';
     const FIRST_IP = '104.37.188.20';
 

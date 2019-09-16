@@ -14,7 +14,7 @@ class FileManagerTest extends PFT
 
     const TEST_ENABLE = true;
     const RANDOM_KEYS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const PATH_ASSETS = 'src/assets/';
+    const PATH_ASSETS = 'assets/';
     const PATH_ASSETS_DB = self::PATH_ASSETS . 'db/';
     const PATH_ASSETS_TESTS = self::PATH_ASSETS . 'tests/';
     const PATH_ASSETS_TESTS_TEMPLATE = self::PATH_ASSETS_TESTS . 'templates/';

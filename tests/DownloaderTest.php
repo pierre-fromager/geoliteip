@@ -13,7 +13,7 @@ class DownloaderTest extends PFT
 {
 
     const TEST_ENABLE = true;
-    const PATH_ASSETS = 'src/assets/';
+    const PATH_ASSETS = 'assets/';
     const PATH_ASSETS_TESTS = self::PATH_ASSETS . 'tests/';
     const PATH_ASSETS_TESTS_SANDBOX = self::PATH_ASSETS_TESTS . 'sandbox/';
     const DL_URL = 'http://requestbin.net/ip';
@@ -112,14 +112,14 @@ class DownloaderTest extends PFT
     }
 
     /**
-     * testGuzzleDownload
-     * @covers PierInfor\GeoLite\Downloader::guzzleDownload
+     * testContentsDownload
+     * @covers PierInfor\GeoLite\Downloader::contentsDownload
      */
-    public function testGuzzleDownload()
+    public function testContentsDownload()
     {
         $this->cleanSandbox();
         $targetFile = self::PATH_ASSETS_TESTS_SANDBOX . self::FILE_GUZZLE;
-        $this->instance->guzzleDownload(self::DL_URL, $targetFile);
+        $this->instance->contentsDownload(self::DL_URL, $targetFile);
         $this->assertTrue(file_exists($targetFile));
     }
 
@@ -150,7 +150,7 @@ class DownloaderTest extends PFT
      */
     public function testDownloadProgressWithOutput()
     {
-        $this->expectOutputString("10%\n");
+        $this->expectOutputString("\ 10%\r");
         $this->instance->displayProgress(true);
         $args = [null, 100, 10, 0, 0];
         self::getMethod('downloadProgress')->invokeArgs($this->instance, $args);

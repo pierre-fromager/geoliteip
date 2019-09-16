@@ -4,7 +4,7 @@ namespace PierInfor\GeoLite\Interfaces;
 
 interface CommonInterface
 {
-    const DB_PATH = '/assets/db/';
+    const DB_PATH = '/../assets/db/';
     const ADAPTER_CITY = 'cityAdapter';
     const ADAPTER_COUNTRY = 'countryAdapter';
     const ADAPTER_ASN = 'asnAdapter';

@@ -12,7 +12,7 @@ use PierInfor\GeoLite\Updater;
 class IpTest extends PFT
 {
     const TEST_ENABLE = true;
-    const PATH_ASSETS_TESTS = 'src/assets/tests/';
+    const PATH_ASSETS_TESTS = 'assets/tests/';
     const ASSET_IP_LIST = self::PATH_ASSETS_TESTS . 'iplist.txt';
     const FIRST_IP = '104.37.188.20';
     const IANA_IP = '192.168.0.1';
