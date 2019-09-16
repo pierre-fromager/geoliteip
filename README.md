@@ -4,17 +4,18 @@ Geoliteip is a php tool to use and manage maxmind GeoLite2 free databases in mmd
 
 ## Features
 
-* use 3 free dbs as asn, country, city.
-* change db on the fly without re-instanciate.
-* input ip list from plain text file.
-* output as array, json, csv.
-* update dbs on the fly or from composer.
+* Use 3 free dbs as asn, country, city.
+* Change db on the fly without re-instanciate.
+* Input ip list from plain text file.
+* Output as array, json, csv.
+* Update dbs on the fly or from composer.
 
 ### Pro
 
-* flexibility with adapter pattern.
-* documented and tested with full coverage.
-* overriding adapters methods can be done to change behaviour.
+* Flexibility and scalability with factory/adapter pattern.
+* Annotated and tested with full coverage.
+* Changing behaviours can be simply done by overloading/adding adapters.
+* All constants class centralized in src/Interfaces can be overloaded;
 
 ### Cons
 
@@ -30,8 +31,8 @@ Geoliteip is a php tool to use and manage maxmind GeoLite2 free databases in mmd
 ```
 composer run db
 ```
-* require xdebug to enable coverage.
-* tests all passed with php version >= 7.0.
+* Require xdebug to enable coverage.
+* Tests all passed with php version >= 7.0.
 * /!\\ updater tests makes real db update from maxmind, abusing leads to a 503.
 
 ## Composer 

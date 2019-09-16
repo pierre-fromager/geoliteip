@@ -13,7 +13,6 @@ interface IpInterface extends CommonInterface
 {
     const HEADERS_COMMON = ['ip', 'country', 'city', 'lon', 'lat', 'radius'];
     const HEADERS_ASN = ['ip', 'as', 'organization'];
-    
     const BUFFER = 4096;
 
     public function __construct($locales = ['fr']);

@@ -49,7 +49,7 @@ class IpTest extends PFT
      */
     protected static function getMethod(string $name)
     {
-        $class = new \ReflectionClass('PierInfor\GeoLite\Ip');
+        $class = new \ReflectionClass(Ip::class);
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         return $method;
@@ -85,6 +85,31 @@ class IpTest extends PFT
     }
 
     /**
+     * constantsProvider
+     * @return Array
+     */
+    public function constantsProvider()
+    {
+        return [
+            ['HEADERS_COMMON'],
+            ['HEADERS_ASN'],
+            ['BUFFER'],
+        ];
+    }
+
+    /**
+     * testConstants
+     * @covers PierInfor\GeoLite\Ip::__construct
+     * @dataProvider constantsProvider
+     */
+    public function testConstants($k)
+    {
+        $class = new \ReflectionClass(Ip::class);
+        $this->assertArrayHasKey($k, $class->getConstants());
+        unset($class);
+    }
+
+    /**
      * testSetReaders
      * @covers PierInfor\GeoLite\Ip::setReaders
      */
@@ -105,20 +130,21 @@ class IpTest extends PFT
      */
     public function testGetHeaders()
     {
+        $method = 'getHeaders';
         $this->geoInst->setAdapter(Ip::ADAPTER_CITY);
-        $headers = self::getMethod('getHeaders')->invokeArgs(
+        $headers = self::getMethod($method)->invokeArgs(
             $this->geoInst,
             []
         );
         $this->assertEquals($headers, Ip::HEADERS_COMMON);
         $this->geoInst->setAdapter(Ip::ADAPTER_ASN);
-        $headers = self::getMethod('getHeaders')->invokeArgs(
+        $headers = self::getMethod($method)->invokeArgs(
             $this->geoInst,
             []
         );
         $this->assertEquals($headers, Ip::HEADERS_ASN);
         $this->geoInst->setAdapter(Ip::ADAPTER_COUNTRY);
-        $headers = self::getMethod('getHeaders')->invokeArgs(
+        $headers = self::getMethod($method)->invokeArgs(
             $this->geoInst,
             []
         );
@@ -359,8 +385,9 @@ class IpTest extends PFT
      */
     public function testCompareArray()
     {
+        $method = 'compareArray';
         $this->geoInst->setAdapter(Ip::ADAPTER_CITY);
-        $compareArray = $this->getMethod('compareArray');
+        $compareArray = $this->getMethod($method);
         $result = $compareArray->invokeArgs(
             $this->geoInst,
             [['a', 'b'], ['c', 'd']]

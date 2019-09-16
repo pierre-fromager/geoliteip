@@ -30,7 +30,7 @@ class UpdaterTest extends PFT
      */
     protected function setUp()
     {
-        if (!self::TEST_ENABLE){
+        if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
         }
         $this->geoInst = new Updater();
@@ -62,6 +62,40 @@ class UpdaterTest extends PFT
     public function testInstance()
     {
         $this->assertTrue($this->isUpdaterInstance());
+    }
+
+    /**
+     * constantsProvider
+     * @return Array
+     */
+    public function constantsProvider()
+    {
+        return [
+            ['DB_PATH'],
+            ['ADAPTER_CITY'],
+            ['ADAPTER_COUNTRY'],
+            ['ADAPTER_ASN'],
+            ['DB_CITY_FILENAME'],
+            ['DB_COUNTRY_FILENAME'],
+            ['DB_ASN_FILENAME'],
+            ['ADAPTERS'],
+            ['UPDATER_URL'],
+            ['UPDATER_EXT'],
+            ['UPDATERS'],
+            ['UPDATERS_DB_FILENAME'],
+        ];
+    }
+
+    /**
+     * testConstants
+     * @covers PierInfor\GeoLite\Updater::__construct
+     * @dataProvider constantsProvider
+     */
+    public function testConstants($k)
+    {
+        $class = new \ReflectionClass(Updater::class);
+        $this->assertArrayHasKey($k, $class->getConstants());
+        unset($class);
     }
 
     /**

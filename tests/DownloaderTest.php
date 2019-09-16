@@ -17,7 +17,7 @@ class DownloaderTest extends PFT
     const PATH_ASSETS_TESTS = self::PATH_ASSETS . 'tests/';
     const PATH_ASSETS_TESTS_SANDBOX = self::PATH_ASSETS_TESTS . 'sandbox/';
     const DL_URL = 'http://requestbin.net/ip';
-    const FILE_GUZZLE = 'guzzle.txt';
+    const FILE_CONTENTS = 'contents.txt';
     const FILE_CURL = 'curl.txt';
     const STAR = '*';
 
@@ -65,7 +65,7 @@ class DownloaderTest extends PFT
      */
     protected static function getMethod(string $name)
     {
-        $class = new \ReflectionClass('PierInfor\GeoLite\Downloader');
+        $class = new \ReflectionClass(Downloader::class);
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         unset($class);
@@ -98,6 +98,57 @@ class DownloaderTest extends PFT
     }
 
     /**
+     * constantsProvider
+     * @return Array
+     */
+    public function constantsProvider()
+    {
+        return [
+            ['USER_AGENT'],
+            ['DOWNLOAD_CALLBACK'],
+            ['BUFFER_SIZE'],
+            ['ADAPTER_CURL'],
+            ['ADAPTER_CONTENTS'],
+            ['ADAPTERS'],
+            ['WHEELS']
+        ];
+    }
+
+    /**
+     * testConstants
+     * @covers PierInfor\GeoLite\Downloader::__construct
+     * @dataProvider constantsProvider
+     */
+    public function testConstants($k)
+    {
+        $class = new \ReflectionClass(Downloader::class);
+        $this->assertArrayHasKey($k, $class->getConstants());
+        unset($class);
+    }
+
+    /**
+     * testSetAdapterException
+     * @covers PierInfor\GeoLite\Downloader::setAdapter
+     */
+    public function testSetAdapterException()
+    {
+        $this->expectException(\Exception::class);
+        $this->instance->setAdapter('badAdapter');
+    }
+
+    /**
+     * testSetAdapter
+     * @covers PierInfor\GeoLite\Downloader::setAdapter
+     */
+    public function testSetAdapter()
+    {
+        $r = $this->instance->setAdapter(Downloader::ADAPTER_CURL);
+        $this->assertTrue($r instanceof Downloader);
+        $r = $this->instance->setAdapter(Downloader::ADAPTER_CONTENTS);
+        $this->assertTrue($r instanceof Downloader);
+    }
+
+    /**
      * testDisplayProgress
      * @covers PierInfor\GeoLite\Downloader::displayProgress
      */
@@ -112,13 +163,32 @@ class DownloaderTest extends PFT
     }
 
     /**
+     * testDownload
+     * @covers PierInfor\GeoLite\Downloader::download
+     */
+    public function testDownload()
+    {
+        $this->cleanSandbox();
+        $targetFile = self::PATH_ASSETS_TESTS_SANDBOX . self::FILE_CONTENTS;
+        $this->instance
+            ->setAdapter(Downloader::ADAPTER_CONTENTS)
+            ->download(self::DL_URL, $targetFile);
+        $this->assertTrue(file_exists($targetFile));
+        $targetFile = self::PATH_ASSETS_TESTS_SANDBOX . self::FILE_CURL;
+        $this->instance
+            ->setAdapter(Downloader::ADAPTER_CURL)
+            ->download(self::DL_URL, $targetFile);
+        $this->assertTrue(file_exists($targetFile));
+    }
+
+    /**
      * testContentsDownload
      * @covers PierInfor\GeoLite\Downloader::contentsDownload
      */
     public function testContentsDownload()
     {
         $this->cleanSandbox();
-        $targetFile = self::PATH_ASSETS_TESTS_SANDBOX . self::FILE_GUZZLE;
+        $targetFile = self::PATH_ASSETS_TESTS_SANDBOX . self::FILE_CONTENTS;
         $this->instance->contentsDownload(self::DL_URL, $targetFile);
         $this->assertTrue(file_exists($targetFile));
     }

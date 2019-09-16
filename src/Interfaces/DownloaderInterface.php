@@ -13,7 +13,6 @@ interface DownloaderInterface
     const DOWNLOAD_CALLBACK = 'downloadProgress';
     const BUFFER_SIZE = 10485764;
     const ADAPTER_CURL = 'curl';
-    const ADAPTER_GUZZLE = 'guzzle';
     const ADAPTER_CONTENTS = 'contents';
     const ADAPTERS = [self::ADAPTER_CURL, self::ADAPTER_CONTENTS];
     const WHEELS = '/-\|';
