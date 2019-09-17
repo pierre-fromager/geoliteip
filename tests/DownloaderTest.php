@@ -93,9 +93,7 @@ class DownloaderTest extends PFT
      */
     public function testInstance()
     {
-        $this->assertTrue(
-            $this->instance instanceof Downloader
-        );
+        $this->assertTrue($this->instance instanceof Downloader);
     }
 
     /**
@@ -129,6 +127,7 @@ class DownloaderTest extends PFT
 
     /**
      * testSetAdapterException
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Downloader::setAdapter
      */
     public function testSetAdapterException()
@@ -139,6 +138,7 @@ class DownloaderTest extends PFT
 
     /**
      * testSetAdapter
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Downloader::setAdapter
      */
     public function testSetAdapter()
@@ -151,6 +151,7 @@ class DownloaderTest extends PFT
 
     /**
      * testDisplayProgress
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Downloader::displayProgress
      */
     public function testDisplayProgress()
@@ -165,6 +166,7 @@ class DownloaderTest extends PFT
 
     /**
      * testDownload
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Downloader::download
      */
     public function testDownload()
@@ -184,6 +186,7 @@ class DownloaderTest extends PFT
 
     /**
      * testContentsDownload
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Downloader::contentsDownload
      */
     public function testContentsDownload()
@@ -196,6 +199,7 @@ class DownloaderTest extends PFT
 
     /**
      * testContentsDownloadException
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Downloader::contentsDownload
      */
     public function testContentsDownloadException()
@@ -210,6 +214,7 @@ class DownloaderTest extends PFT
 
     /**
      * testCurlDownload
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Downloader::curlDownload
      */
     public function testCurlDownload()
@@ -230,6 +235,7 @@ class DownloaderTest extends PFT
 
     /**
      * testCurlDownloadException
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Downloader::curlDownload
      */
     public function testCurlDownloadException()
@@ -244,6 +250,7 @@ class DownloaderTest extends PFT
 
     /**
      * testDownloadProgressWithOutput
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Downloader::downloadProgress
      * @covers PierInfor\GeoLite\Downloader::getProgress
      */
@@ -260,6 +267,7 @@ class DownloaderTest extends PFT
 
     /**
      * testDownloadProgressWithoutOutput
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Downloader::downloadProgress
      * @covers PierInfor\GeoLite\Downloader::getProgress
      */

@@ -16,22 +16,21 @@ class Installer
     public static function postInstall()
     {
         echo "\n";
-        $error = false;
-        $updater = new Updater();
-        $updater
+        $cityUpdateError = false;
+        $updater = (new Updater())
             ->getFileManager()
             ->getDownloader()
             ->setAdapter(Downloader::ADAPTER_CURL)
             ->displayProgress(true);
         self::output('Update maxmind databases started');
-        self::output('Updating city');
         try {
+            self::output('Updating city');
             $updater->setAdapter(Updater::ADAPTER_CITY)->update();
         } catch (\Exception $e) {
-            $error = true;
+            $cityUpdateError = true;
             self::output('Download from maxmind failed');
         }
-        if (!$error) {
+        if (!$cityUpdateError) {
             self::output('Updating country');
             $updater->setAdapter(Updater::ADAPTER_COUNTRY)->update();
             self::output('Updating asn');

@@ -37,16 +37,6 @@ class UpdaterTest extends PFT
     }
 
     /**
-     * facility to check instanceof
-     *
-     * @return boolean
-     */
-    protected function isUpdaterInstance(): bool
-    {
-        return $this->geoInst instanceof Updater;
-    }
-
-    /**
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
@@ -61,7 +51,7 @@ class UpdaterTest extends PFT
      */
     public function testInstance()
     {
-        $this->assertTrue($this->isUpdaterInstance());
+        $this->assertTrue($this->geoInst instanceof Updater);
     }
 
     /**
@@ -100,11 +90,11 @@ class UpdaterTest extends PFT
 
     /**
      * testGetFileManager
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Updater::getFileManager
      */
     public function testGetFileManager()
     {
-        $res = $this->geoInst->getFileManager();
         $this->assertTrue(
             $this->geoInst->getFileManager() instanceof FileManager
         );
@@ -112,6 +102,7 @@ class UpdaterTest extends PFT
 
     /**
      * testSetAdapterException
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Updater::setAdapter
      */
     public function testSetAdapterException()
@@ -122,41 +113,48 @@ class UpdaterTest extends PFT
 
     /**
      * testSetAdapter
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Updater::setAdapter
      */
     public function testSetAdapter()
     {
-        $this->geoInst->setAdapter(Updater::ADAPTER_CITY);
-        $this->assertTrue($this->isUpdaterInstance());
-        $this->geoInst->setAdapter(Updater::ADAPTER_COUNTRY);
-        $this->assertTrue($this->isUpdaterInstance());
-        $this->geoInst->setAdapter(Updater::ADAPTER_ASN);
-        $this->assertTrue($this->isUpdaterInstance());
+        $this->assertTrue(
+            $this->geoInst->setAdapter(Updater::ADAPTER_CITY) instanceof Updater
+        );
+        $this->assertTrue(
+            $this->geoInst->setAdapter(Updater::ADAPTER_COUNTRY) instanceof Updater
+        );
+        $this->assertTrue(
+            $this->geoInst->setAdapter(Updater::ADAPTER_ASN) instanceof Updater
+        );
     }
 
     /**
      * testClean
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Updater::clean
      */
     public function testClean()
     {
         $this->geoInst->clean();
+        /*
         $this->geoInst->setAdapter(Updater::ADAPTER_CITY);
         $this->assertTrue($this->isUpdaterInstance());
         $this->geoInst->setAdapter(Updater::ADAPTER_COUNTRY);
         $this->assertTrue($this->isUpdaterInstance());
         $this->geoInst->setAdapter(Updater::ADAPTER_ASN);
-        $this->assertTrue($this->isUpdaterInstance());
+        $this->assertTrue($this->isUpdaterInstance());*/
     }
 
     /**
      * testUpdateCity
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Updater::update
      */
     public function testUpdateCity()
     {
-        $this->geoInst->setAdapter(Updater::ADAPTER_CITY)->update();
-        $this->assertTrue($this->isUpdaterInstance());
+        $retInst = $this->geoInst->setAdapter(Updater::ADAPTER_CITY)->update();
+        $this->assertTrue($retInst instanceof Updater);
         $this->assertTrue(
             file_exists(
                 __DIR__ . Updater::DB_PATH . Updater::DB_CITY_FILENAME
@@ -166,6 +164,7 @@ class UpdaterTest extends PFT
 
     /**
      * testUpdateRequired
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Updater::updateRequired
      */
     public function testUpdateRequired()
