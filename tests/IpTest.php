@@ -86,6 +86,7 @@ class IpTest extends PFT
 
     /**
      * constantsProvider
+     * @depends testInstance
      * @return Array
      */
     public function constantsProvider()
@@ -99,6 +100,7 @@ class IpTest extends PFT
 
     /**
      * testConstants
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::__construct
      * @dataProvider constantsProvider
      */
@@ -111,6 +113,7 @@ class IpTest extends PFT
 
     /**
      * testSetReaders
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::setReaders
      */
     public function testSetReaders()
@@ -126,6 +129,7 @@ class IpTest extends PFT
 
     /**
      * testGetHeaders
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::getHeaders
      */
     public function testGetHeaders()
@@ -154,6 +158,7 @@ class IpTest extends PFT
 
     /**
      * testReset
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::reset
      */
     public function testReset()
@@ -165,6 +170,7 @@ class IpTest extends PFT
 
     /**
      * testAddIp
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::addIp
      */
     public function testAddIp()
@@ -182,6 +188,7 @@ class IpTest extends PFT
 
     /**
      * testOkFromfile
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::fromFile
      */
     public function testFromfileException()
@@ -192,6 +199,7 @@ class IpTest extends PFT
 
     /**
      * testSetAdapterException
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::setAdapter
      */
     public function testSetAdapterException()
@@ -202,6 +210,7 @@ class IpTest extends PFT
 
     /**
      * testSetAdapter
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::setAdapter
      */
     public function testSetAdapters()
@@ -217,6 +226,7 @@ class IpTest extends PFT
 
     /**
      * testGetUpdater
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::getUpdater
      */
     public function testGetUpdater()
@@ -237,6 +247,7 @@ class IpTest extends PFT
 
     /**
      * testUpdate
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::update
      */
     public function testUpdate()
@@ -253,6 +264,7 @@ class IpTest extends PFT
 
     /**
      * testOkFromfile
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::fromFile
      */
     public function testOkFromfile()
@@ -269,6 +281,7 @@ class IpTest extends PFT
 
     /**
      * testNokFromfile
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::fromFile
      */
     public function testNokFromfile()
@@ -287,6 +300,7 @@ class IpTest extends PFT
 
     /**
      * testProcessCountry
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::fromFile
      * @covers PierInfor\GeoLite\Ip::setAdapter
      * @covers PierInfor\GeoLite\Ip::process
@@ -317,6 +331,7 @@ class IpTest extends PFT
 
     /**
      * testProcessCity
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::fromFile
      * @covers PierInfor\GeoLite\Ip::setAdapter
      * @covers PierInfor\GeoLite\Ip::process
@@ -350,6 +365,7 @@ class IpTest extends PFT
 
     /**
      * testSort
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::fromFile
      * @covers PierInfor\GeoLite\Ip::setAdapter
      * @covers PierInfor\GeoLite\Ip::process
@@ -381,6 +397,7 @@ class IpTest extends PFT
 
     /**
      * testCompareArray
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::compareArray
      */
     public function testCompareArray()
@@ -410,6 +427,7 @@ class IpTest extends PFT
 
     /**
      * testToJson
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::fromFile
      * @covers PierInfor\GeoLite\Ip::setAdapter
      * @covers PierInfor\GeoLite\Ip::process
@@ -443,6 +461,7 @@ class IpTest extends PFT
 
     /**
      * testToCsv
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::fromFile
      * @covers PierInfor\GeoLite\Ip::setAdapter
      * @covers PierInfor\GeoLite\Ip::process
@@ -477,6 +496,7 @@ class IpTest extends PFT
 
     /**
      * testCityAdapter
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::cityAdapter
      */
     public function testCityAdapter()
@@ -499,6 +519,7 @@ class IpTest extends PFT
 
     /**
      * testCityAdapterAddressNotFound
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::cityAdapter
      */
     public function testCityAdapterAddressNotFound()
@@ -517,6 +538,7 @@ class IpTest extends PFT
 
     /**
      * testCityAdapterInvalidArgument
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::cityAdapter
      */
     public function testCityAdapterInvalidArgument()
@@ -535,6 +557,7 @@ class IpTest extends PFT
 
     /**
      * testCountryAdapter
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::countryAdapter
      */
     public function testCountryAdapter()
@@ -553,6 +576,7 @@ class IpTest extends PFT
 
     /**
      * testCountryAdapterAddressNotFound
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::countryAdapter
      */
     public function testCountryAdapterAddressNotFound()
@@ -571,6 +595,7 @@ class IpTest extends PFT
 
     /**
      * testCountryAdapterInvalidArgument
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::countryAdapter
      */
     public function testCountryAdapterInvalidArgument()
@@ -589,6 +614,7 @@ class IpTest extends PFT
 
     /**
      * testAsnAdapter
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::asnAdapter
      */
     public function testAsnAdapter()
@@ -608,6 +634,7 @@ class IpTest extends PFT
 
     /**
      * testAsnAdapterAddressNotFound
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::asnAdapter
      */
     public function testAsnAdapterAddressNotFound()
@@ -626,6 +653,7 @@ class IpTest extends PFT
 
     /**
      * testAsnAdapterInvalidArgument
+     * @depends testInstance
      * @covers PierInfor\GeoLite\Ip::asnAdapter
      */
     public function testAsnAdapterInvalidArgument()

@@ -61,7 +61,7 @@ class FileManager implements Interfaces\FileManagerInterface
      *
      * @param string $tgzFilename
      * @return boolean
-     * @throws \Exception  
+     * @throws \Exception
      */
     public function ungz(string $tgzFilename): bool
     {
@@ -90,8 +90,7 @@ class FileManager implements Interfaces\FileManagerInterface
      */
     public function untar(string $tarFilename, string $targetFolder): bool
     {
-        if (
-            empty($tarFilename)
+        if (empty($tarFilename)
             || empty($targetFolder)
             || !file_exists($tarFilename)
         ) {
@@ -144,6 +143,9 @@ class FileManager implements Interfaces\FileManagerInterface
     public function fileDate(string $path): string
     {
         clearstatcache();
+        if (!file_exists($path)) {
+            return '1971-01-14';
+        }
         return date('Y-m-d', filemtime($path));
     }
 

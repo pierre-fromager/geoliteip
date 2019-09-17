@@ -29,18 +29,13 @@ class InstallerTest extends PFT
     }
 
     /**
-     * get any method from a class to be invoked whatever the scope
-     *
-     * @param String $name
+     * removeArchives
      * @return void
      */
-    protected static function getMethod(string $name)
+    protected function removeArchives()
     {
-        $class = new \ReflectionClass(Downloader::class);
-        $method = $class->getMethod($name);
-        $method->setAccessible(true);
-        unset($class);
-        return $method;
+        $this->emptyDbFiles('*.tar.gz');
+        $this->emptyDbFiles('*.tar');
     }
 
     /**
@@ -49,7 +44,7 @@ class InstallerTest extends PFT
      */
     protected function setUp()
     {
-        $this->emptyDbFiles('*');
+        $this->removeArchives();
     }
 
     /**
@@ -57,10 +52,7 @@ class InstallerTest extends PFT
      * This method is called after a test is executed.
      */
     protected function tearDown()
-    {
-        $this->emptyDbFiles('*.tar.gz');
-        $this->emptyDbFiles('*.tar');
-    }
+    { }
 
     /**
      * testPostInstall
@@ -68,6 +60,7 @@ class InstallerTest extends PFT
      */
     function testPostInstall()
     {
+        $this->emptyDbFiles('*');
         $cityFile = self::PATH_ASSET_DB . Updater::DB_CITY_FILENAME;
         $countryFile = self::PATH_ASSET_DB . Updater::DB_COUNTRY_FILENAME;
         $ansFile = self::PATH_ASSET_DB . Updater::DB_ASN_FILENAME;
@@ -78,5 +71,19 @@ class InstallerTest extends PFT
         $this->assertTrue(file_exists($cityFile));
         $this->assertTrue(file_exists($countryFile));
         $this->assertTrue(file_exists($ansFile));
+    }
+
+
+    /**
+     * testOutput
+     * @covers PierInfor\GeoLite\Installer::output
+     */
+    function testOutput()
+    {
+        $date = date('H:i:s');
+        $msg = 'test';
+        $expected = sprintf('%s - %s.%s', $date, $msg, "\n");
+        $this->expectOutputString($expected);
+        Installer::output($msg);
     }
 }

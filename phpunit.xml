@@ -8,23 +8,18 @@
             <file>tests/InstallerTest.php</file>
         </testsuite>
         <testsuite name="Downloader">
-            <directory>tests</directory>
             <file>tests/DownloaderTest.php</file>
         </testsuite>
         <testsuite name="Ip">
-            <directory>tests</directory>
             <file>tests/IpTest.php</file>
         </testsuite>
-        <directory>tests</directory>
         <testsuite name="FileManager">
             <file>tests/FileManagerTest.php</file>
         </testsuite>
         <testsuite name="Updater">
-            <directory>tests</directory>
             <file>tests/UpdaterTest.php</file>
         </testsuite>
         <testsuite name="Installer">
-            <directory>tests</directory>
             <file>tests/InstallerTest.php</file>
         </testsuite>
     </testsuites>

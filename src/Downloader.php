@@ -90,6 +90,16 @@ class Downloader implements Interfaces\DownloaderInterface
      */
     public function contentsDownload(string $url, string $toFilename): Downloader
     {
+        $headers = get_headers($url);
+        $statusCode = 0;
+        if (isset($headers[0])) {
+            $header = $headers[0];
+            preg_match("/^HTTP.+\s(\d\d\d)\s/", $header, $m);
+            $statusCode = $m[1];
+        }
+        if ($statusCode != 200) {
+            throw new \Exception('Bad http code : ' . $statusCode);
+        }
         file_put_contents($toFilename, file_get_contents($url));
         return $this;
     }
@@ -111,7 +121,7 @@ class Downloader implements Interfaces\DownloaderInterface
      *
      * @param string $url
      * @param string $toFilename
-     * @return FileManager
+     * @return Downloader
      */
     public function curlDownload(string $url, string $toFilename): Downloader
     {
@@ -134,6 +144,12 @@ class Downloader implements Interfaces\DownloaderInterface
         curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, [$this, self::DOWNLOAD_CALLBACK]);
         curl_setopt($ch, CURLOPT_AUTOREFERER, true);
         curl_exec($ch);
+        if (!curl_errno($ch)) {
+            $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            if ($statusCode != 200) {
+                throw new \Exception('Bad http code : ' . $statusCode);
+            }
+        }
         curl_close($ch);
         fclose($fp);
         return $this;

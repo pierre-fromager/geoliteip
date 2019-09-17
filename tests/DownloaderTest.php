@@ -17,6 +17,7 @@ class DownloaderTest extends PFT
     const PATH_ASSETS_TESTS = self::PATH_ASSETS . 'tests/';
     const PATH_ASSETS_TESTS_SANDBOX = self::PATH_ASSETS_TESTS . 'sandbox/';
     const DL_URL = 'http://requestbin.net/ip';
+    const STATUS_URL = 'https://httpstat.us/';
     const FILE_CONTENTS = 'contents.txt';
     const FILE_CURL = 'curl.txt';
     const STAR = '*';
@@ -194,6 +195,20 @@ class DownloaderTest extends PFT
     }
 
     /**
+     * testContentsDownloadException
+     * @covers PierInfor\GeoLite\Downloader::contentsDownload
+     */
+    public function testContentsDownloadException()
+    {
+        $this->cleanSandbox();
+        $this->expectException(\Exception::class);
+        $this->instance->contentsDownload(
+            self::STATUS_URL . '530', 
+            self::PATH_ASSETS_TESTS_SANDBOX . self::FILE_CONTENTS
+        );
+    }
+
+    /**
      * testCurlDownload
      * @covers PierInfor\GeoLite\Downloader::curlDownload
      */
@@ -211,6 +226,20 @@ class DownloaderTest extends PFT
             ->curlDownload(self::DL_URL, $targetFile);
         $this->assertTrue(file_exists($targetFile));
         $this->cleanSandbox();
+    }
+
+    /**
+     * testCurlDownloadException
+     * @covers PierInfor\GeoLite\Downloader::curlDownload
+     */
+    public function testCurlDownloadException()
+    {
+        $this->cleanSandbox();
+        $this->expectException(\Exception::class);
+        $this->instance->curlDownload(
+            self::STATUS_URL . '530', 
+            self::PATH_ASSETS_TESTS_SANDBOX . self::FILE_CONTENTS
+        );
     }
 
     /**

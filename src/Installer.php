@@ -23,30 +23,31 @@ class Installer
             ->getDownloader()
             ->setAdapter(Downloader::ADAPTER_CURL)
             ->displayProgress(true);
-        self::ouput('Update maxmind databases started');
-        self::ouput('Updating city');
+        self::output('Update maxmind databases started');
+        self::output('Updating city');
         try {
             $updater->setAdapter(Updater::ADAPTER_CITY)->update();
         } catch (\Exception $e) {
             $error = true;
-            self::ouput('Download from maxmind failed');
+            self::output('Download from maxmind failed');
         }
         if (!$error) {
-            self::ouput('Updating country');
+            self::output('Updating country');
             $updater->setAdapter(Updater::ADAPTER_COUNTRY)->update();
-            self::ouput('Updating asn');
+            self::output('Updating asn');
             $updater->setAdapter(Updater::ADAPTER_ASN)->update();
         }
-        self::ouput('Update maxmind databases finished');
+        self::output('Update maxmind databases finished');
     }
 
     /**
      * console output
      *
      * @param string $msg
+     * @param boolean $newline
      * @return void
      */
-    protected static function ouput(string $msg, $newline = true)
+    public static function output(string $msg, $newline = true)
     {
         echo sprintf('%s - %s.%s', date('H:i:s'), $msg, ($newline) ? "\n" : '');
     }
