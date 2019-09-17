@@ -71,17 +71,13 @@ class IpTest extends PFT
      */
     public function testInstance()
     {
-        $isGeoInstance = $this->geoInst instanceof Ip;
-        $this->assertTrue($isGeoInstance);
-        $this->geoInst->setAdapter(Ip::ADAPTER_ASN);
-        $isGeoInstance = $this->geoInst instanceof Ip;
-        $this->assertTrue($isGeoInstance);
-        $this->geoInst->setAdapter(Ip::ADAPTER_CITY);
-        $isGeoInstance = $this->geoInst instanceof Ip;
-        $this->assertTrue($isGeoInstance);
-        $this->geoInst->setAdapter(Ip::ADAPTER_COUNTRY);
-        $isGeoInstance = $this->geoInst instanceof Ip;
-        $this->assertTrue($isGeoInstance);
+        $this->assertTrue($this->geoInst instanceof Ip);
+        $retInst = $this->geoInst->setAdapter(Ip::ADAPTER_ASN);
+        $this->assertTrue($retInst instanceof Ip);
+        $retInst = $this->geoInst->setAdapter(Ip::ADAPTER_CITY);
+        $this->assertTrue($retInst instanceof Ip);
+        $retInst = $this->geoInst->setAdapter(Ip::ADAPTER_COUNTRY);
+        $this->assertTrue($retInst instanceof Ip);
     }
 
     /**
@@ -95,6 +91,14 @@ class IpTest extends PFT
             ['HEADERS_COMMON'],
             ['HEADERS_ASN'],
             ['BUFFER'],
+            ['DB_PATH'],
+            ['ADAPTER_CITY'],
+            ['ADAPTER_COUNTRY'],
+            ['ADAPTER_ASN'],
+            ['DB_CITY_FILENAME'],
+            ['DB_COUNTRY_FILENAME'],
+            ['DB_ASN_FILENAME'],
+            ['ADAPTERS']
         ];
     }
 
