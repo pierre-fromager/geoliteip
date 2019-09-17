@@ -52,7 +52,8 @@ class FileManagerTest extends PFT
      *
      * @return void
      */
-    protected function cleanSandbox(){
+    protected function cleanSandbox()
+    {
         $this->instance->unlinkFolders(self::PATH_ASSETS_TESTS_SANDBOX . '*');
         $this->instance->unlinkFiles(self::PATH_ASSETS_TESTS_SANDBOX . '*');
         if (!file_exists(self::PATH_ASSETS_TESTS_SANDBOX)) {
@@ -179,6 +180,10 @@ class FileManagerTest extends PFT
         $validator = '/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/';
         $validate = preg_match($validator, $fileDate) ? true : false;
         $this->assertTrue($validate);
+        $fileDate = $this->instance->fileDate(
+            self::PATH_ASSETS_TESTS_TEMPLATE . 'notfound.tgz'
+        );
+        $this->assertEquals($fileDate, '1971-01-14');
     }
 
     /**
