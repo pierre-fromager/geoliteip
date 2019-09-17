@@ -157,7 +157,11 @@ class UpdaterTest extends PFT
     {
         $this->geoInst->setAdapter(Updater::ADAPTER_CITY)->update();
         $this->assertTrue($this->isUpdaterInstance());
-        $this->assertTrue(file_exists(Updater::DB_PATH . Updater::DB_CITY_FILENAME));
+        $this->assertTrue(
+            file_exists(
+                __DIR__ . Updater::DB_PATH . Updater::DB_CITY_FILENAME
+            )
+        );
     }
 
     /**
