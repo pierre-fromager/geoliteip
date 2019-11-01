@@ -1,5 +1,7 @@
 # geoliteip
 
+[![TravsisBadgeBuild](https://travis-ci.org/pierre-fromager/geoliteip.svg?branch=master)](https://travis-ci.org/pierre-fromager/geoliteip)
+
 Geoliteip is a php tool to use and manage maxmind GeoLite2 free databases in mmdb format.
 
 ## Features

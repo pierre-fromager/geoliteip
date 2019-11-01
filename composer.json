@@ -29,6 +29,9 @@
         "coverage": [
             "phpunit --coverage-html='./coverage' --bootstrap tests/bootstrap.php tests"
         ],
+        "covdbg": [
+            "phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.clover"
+        ],
         "test": [
             "phpunit tests"
         ],
