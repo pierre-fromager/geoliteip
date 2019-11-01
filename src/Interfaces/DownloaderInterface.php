@@ -19,8 +19,6 @@ interface DownloaderInterface
 
     public function __construct();
 
-    public function __destruct();
-
     public function displayProgress(bool $show = false): Downloader;
 
     public function curlDownload(string $url, string $toFilename): Downloader;
