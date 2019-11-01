@@ -26,5 +26,5 @@ install:
   - composer run db
 
 script:
-  - vendor/bin/phpunit
+  - composer run test
   #- phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.clover

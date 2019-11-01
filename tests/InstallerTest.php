@@ -24,10 +24,8 @@ class InstallerTest extends PFT
     protected function emptyDbFiles(string $mask)
     {
         $rpath = realpath(self::PATH_ASSET_DB);
-        //echo $rpath;die;
         $dbFiles = glob($rpath . self::DS . $mask);
         foreach ($dbFiles as $dbFile) {
-            //echo $dbFile . "\n";
             @unlink($dbFile);
         }
     }
