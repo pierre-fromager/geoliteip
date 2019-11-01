@@ -136,7 +136,8 @@ class UpdaterTest extends PFT
      */
     public function testClean()
     {
-        $this->geoInst->clean();
+        $cle = $this->geoInst->clean();
+        $this->assertTrue($cle instanceof Updater);
         /*
         $this->geoInst->setAdapter(Updater::ADAPTER_CITY);
         $this->assertTrue($this->isUpdaterInstance());

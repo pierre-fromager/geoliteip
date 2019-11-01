@@ -13,7 +13,6 @@ cache:
 env:
   matrix:
     - DRIVER="phpdbg" DEPENDENCIES="high"
-    - OS=debian DIST=stretch
 
   global:
     - DEFAULT_COMPOSER_FLAGS="--no-interaction --no-ansi --no-progress --no-suggest"
@@ -21,13 +20,11 @@ env:
 matrix:
   include:
     - php: 7
-    - php: 7.1
-    - php: 7.2
-    - php: 7.3
 
 install:
   - composer install --no-interaction
   - composer run db
 
 script:
-  - phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.clover
+  - vendor/bin/phpunit
+  #- phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.clover
