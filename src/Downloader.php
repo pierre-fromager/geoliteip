@@ -39,14 +39,6 @@ class Downloader implements Interfaces\DownloaderInterface
     }
 
     /**
-     * on unset instance
-     */
-    public function __destruct()
-    {
-        $this->client  = null;
-    }
-
-    /**
      * set adapter for download factory
      *
      * @param string $adapter
@@ -158,7 +150,7 @@ class Downloader implements Interfaces\DownloaderInterface
     /**
      * download progress callback
      *
-     * @param Ressource $resource
+     * @param mixed $resource
      * @param integer $download_size
      * @param integer $downloaded
      * @param integer $upload_size

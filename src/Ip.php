@@ -119,7 +119,7 @@ class Ip implements Interfaces\IpInterface
      * set adapter
      *
      * @param string $adapter
-     * @return GeoLiteIp
+     * @return Ip
      * @throws \Exception
      */
     public function setAdapter(string $adapter = self::ADAPTER_COUNTRY): Ip

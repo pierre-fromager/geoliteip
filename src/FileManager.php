@@ -26,14 +26,6 @@ class FileManager implements Interfaces\FileManagerInterface
     }
 
     /**
-     * on unset instance
-     */
-    public function __destruct()
-    {
-        $this->client = null;
-    }
-
-    /**
      * returns downloader instance
      *
      * @return Downloader
