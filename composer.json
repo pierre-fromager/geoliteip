@@ -9,7 +9,7 @@
     ],
     "license": "GNU3",
     "type": "project",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "require": {
         "geoip2/geoip2": "~2.0"
     },
