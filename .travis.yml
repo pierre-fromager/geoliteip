@@ -26,9 +26,8 @@ matrix:
     - php: 7.3
 
 install:
-  - travis_retry composer install --no-interaction
-
-before_script: composer run db
+  - composer install --no-interaction
+  - composer run db
 
 script:
   - phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.clover
