@@ -14,6 +14,7 @@ class InstallerTest extends PFT
 
     const PATH_ASSETS = 'assets/';
     const PATH_ASSET_DB = self::PATH_ASSETS . 'db/';
+    const DS = '/';
 
     /**
      * emptyDbFiles
@@ -22,8 +23,11 @@ class InstallerTest extends PFT
      */
     protected function emptyDbFiles(string $mask)
     {
-        $dbFiles = glob(self::PATH_ASSET_DB . $mask);
+        $rpath = realpath(self::PATH_ASSET_DB);
+        //echo $rpath;die;
+        $dbFiles = glob($rpath . self::DS . $mask);
         foreach ($dbFiles as $dbFile) {
+            //echo $dbFile . "\n";
             @unlink($dbFile);
         }
     }
@@ -61,9 +65,9 @@ class InstallerTest extends PFT
     function testPostInstall()
     {
         $this->emptyDbFiles('*');
-        $cityFile = self::PATH_ASSET_DB . Updater::DB_CITY_FILENAME;
-        $countryFile = self::PATH_ASSET_DB . Updater::DB_COUNTRY_FILENAME;
-        $ansFile = self::PATH_ASSET_DB . Updater::DB_ASN_FILENAME;
+        $cityFile = realpath(self::PATH_ASSET_DB) . self::DS . Updater::DB_CITY_FILENAME;
+        $countryFile = realpath(self::PATH_ASSET_DB) . self::DS . Updater::DB_COUNTRY_FILENAME;
+        $ansFile = realpath(self::PATH_ASSET_DB) . self::DS . Updater::DB_ASN_FILENAME;
         $this->assertFalse(file_exists($cityFile));
         $this->assertFalse(file_exists($countryFile));
         $this->assertFalse(file_exists($ansFile));
