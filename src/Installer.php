@@ -3,6 +3,7 @@
 namespace PierInfor\GeoLite;
 
 use PierInfor\GeoLite\Updater;
+use PierInfor\GeoLite\Downloader;
 
 class Installer
 {
@@ -17,7 +18,8 @@ class Installer
     {
         echo "\n";
         $cityUpdateError = false;
-        $updater = (new Updater())
+        $updater = new Updater();
+        $updater
             ->getFileManager()
             ->getDownloader()
             ->setAdapter(Downloader::ADAPTER_CURL)
@@ -28,7 +30,7 @@ class Installer
             $updater->setAdapter(Updater::ADAPTER_CITY)->update();
         } catch (\Exception $e) {
             $cityUpdateError = true;
-            self::output('Download from maxmind failed');
+            self::output('Download from maxmind failed : ' . $e->getMessage());
         }
         if (!$cityUpdateError) {
             self::output('Updating country');

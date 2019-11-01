@@ -1,4 +1,4 @@
-<phpunit colors="true" strict="true">
+<phpunit bootstrap="./tests/bootstrap.php" colors="true" strict="true">
     <testsuites>
         <testsuite name="all">
             <file>tests/DownloaderTest.php</file>

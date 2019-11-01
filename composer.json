@@ -30,7 +30,7 @@
             "phpunit --coverage-html='./coverage' --bootstrap tests/bootstrap.php tests"
         ],
         "test": [
-            "phpunit --bootstrap tests/bootstrap.php tests"
+            "phpunit tests"
         ],
         "testDownloader": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite Downloader"

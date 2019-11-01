@@ -11,14 +11,11 @@ matrix:
   include:
     - php: 7
       env:
-        - EXECUTE_CS_CHECK=true
-        - EXECUTE_TEST_COVERALLS=true
+        - EXECUTE_CS_CHECK=false
+        - EXECUTE_TEST_COVERALLS=false
     - php: 7.1
   allow_failures:
     - php: 7
-
-services:
-  - redis-server
 
 install:
   - travis_retry composer install --no-interaction
