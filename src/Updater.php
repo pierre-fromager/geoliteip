@@ -105,7 +105,7 @@ class Updater implements Interfaces\UpdaterInterface
         $updatedToday = $this->fileManager->isFileDateToday(
             self::ABS_DB_PATH . $this->dbFilename()
         );
-        return (false == $updatedToday);
+        return (false === $updatedToday);
     }
 
     /**

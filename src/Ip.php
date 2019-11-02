@@ -226,6 +226,8 @@ class Ip implements Interfaces\IpInterface
             case self::ADAPTER_ASN:
                 $reader = $this->readerAsn;
                 break;
+            default:
+                $reader = $this->readerCity;
         }
         return $reader;
     }
