@@ -119,13 +119,16 @@ class UpdaterTest extends PFT
     public function testSetAdapter()
     {
         $this->assertTrue(
-            $this->geoInst->setAdapter(Updater::ADAPTER_CITY) instanceof Updater
+            $this->geoInst->setAdapter(Updater::ADAPTER_CITY)
+                instanceof Updater
         );
         $this->assertTrue(
-            $this->geoInst->setAdapter(Updater::ADAPTER_COUNTRY) instanceof Updater
+            $this->geoInst->setAdapter(Updater::ADAPTER_COUNTRY)
+                instanceof Updater
         );
         $this->assertTrue(
-            $this->geoInst->setAdapter(Updater::ADAPTER_ASN) instanceof Updater
+            $this->geoInst->setAdapter(Updater::ADAPTER_ASN)
+                instanceof Updater
         );
     }
 

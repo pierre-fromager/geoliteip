@@ -27,10 +27,10 @@
     },
     "scripts": {
         "coverage": [
-            "phpunit --coverage-html='./coverage' --bootstrap tests/bootstrap.php tests"
+            "phpunit --coverage-html='./coverage'"
         ],
         "covdbg": [
-            "phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.clover tests"
+            "phpdbg -qrr vendor/bin/phpunit --coverage-html='./coverage'"
         ],
         "test": [
             "phpunit tests"

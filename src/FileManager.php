@@ -110,7 +110,11 @@ class FileManager implements Interfaces\FileManagerInterface
      */
     public function folderList(string $path): array
     {
-        return @glob($path . '*', GLOB_ONLYDIR);
+        if (false === is_dir($path)) {
+            return [];
+        }
+        $list = @glob($path . '*', GLOB_ONLYDIR);
+        return (false === $list) ? [] : $list;
     }
 
     /**
@@ -158,19 +162,25 @@ class FileManager implements Interfaces\FileManagerInterface
      */
     public function unlinkFiles(string $mask): bool
     {
+        if (empty($mask)) {
+            return false;
+        }
+        if (false === is_dir(dirname($mask))) {
+            return false;
+        }
         $toDelete = @glob($mask);
-        if (false === $toDelete) {
-            return $toDelete;
+        if (false === is_array($toDelete)) {
+            return false;
+        }
+        if ($toDelete == []) {
+            return true;
         }
         $toDeleteCount = count($toDelete);
-        $opStatus = [];
+        $errors = 0;
         for ($c = 0; $c < $toDeleteCount; $c++) {
-            $opStatus[] = (int) @unlink($toDelete[$c]);
+            $errors += (@unlink($toDelete[$c])) ? 0 : 1;
         }
-        $status = array_reduce($opStatus, function ($car, $ite) {
-            return $car += $ite;
-        });
-        return ($status > 0);
+        return ($errors === 0);
     }
 
     /**
@@ -183,14 +193,11 @@ class FileManager implements Interfaces\FileManagerInterface
     {
         $toDelete = $this->folderList($path);
         $toDeleteCount = count($toDelete);
-        $opStatus = [];
+        $errors = 0;
         for ($c = 0; $c < $toDeleteCount; $c++) {
-            $opStatus[] = (int) $this->deleteFolder($toDelete[$c]);
+            $errors += ($this->deleteFolder($toDelete[$c])) ?  0 : 1;
         }
-        $status = array_reduce($opStatus, function ($car, $ite) {
-            return $car += $ite;
-        });
-        return ($status > 0);
+        return ($errors === 0);
     }
 
     /**
@@ -201,22 +208,19 @@ class FileManager implements Interfaces\FileManagerInterface
      */
     public function deleteFolder(string $path): bool
     {
-        $opStatus = [];
+        $errors = 0;
         $fsItNoDots = \FilesystemIterator::SKIP_DOTS;
         $rdiT = new \RecursiveDirectoryIterator($path, $fsItNoDots);
         $riiFirstChild = \RecursiveIteratorIterator::CHILD_FIRST;
         $rii = new \RecursiveIteratorIterator($rdiT, $riiFirstChild);
         foreach ($rii as $file) {
             if ($file->isDir()) {
-                $opStatus[] = (int) @rmdir($file->getPathname());
+                $errors += (@rmdir($file->getPathname())) ? 0 : 1;
             } else {
-                $opStatus[] = (int) @unlink($file->getPathname());
+                $errors += (@unlink($file->getPathname())) ? 0 : 1;
             }
         }
-        $opStatus[] = (int) @rmdir($path);
-        $status = array_reduce($opStatus, function ($car, $ite) {
-            return $car += $ite;
-        });
-        return $status;
+        $errors += (@rmdir($path)) ? 0 : 1;
+        return ($errors === 0);
     }
 }

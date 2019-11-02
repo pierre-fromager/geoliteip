@@ -237,6 +237,17 @@ class FileManagerTest extends PFT
         }
         // Assert no more files in sandbox
         $this->assertEmpty(glob(self::PATH_ASSETS_TESTS_SANDBOX . '*'));
+        // empty path
+        $this->assertFalse($this->instance->unlinkFiles(''));
+        // bad dir
+        $this->assertFalse($this->instance->unlinkFiles(
+            self::PATH_ASSETS_TESTS_SANDBOX .  'badormissingfolder/*'
+        ));
+        // empty dir nothing to do
+        mkdir(self::PATH_ASSETS_TESTS_SANDBOX . 'emptydir');
+        $this->assertTrue($this->instance->unlinkFiles(
+            self::PATH_ASSETS_TESTS_SANDBOX .  'emptydir/*'
+        ));
     }
 
     /**
