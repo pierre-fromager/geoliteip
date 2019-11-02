@@ -77,8 +77,6 @@ class FileManager implements Interfaces\FileManagerInterface
      * @param string $tarFilename
      * @param string $targetFolder
      * @return boolean
-     * @return void
-     *
      */
     public function untar(string $tarFilename, string $targetFolder): bool
     {
@@ -156,30 +154,40 @@ class FileManager implements Interfaces\FileManagerInterface
      * unlink multiples files from a path and a mask
      *
      * @param string $mask
-     * @return void
+     * @return boolean
      */
-    public function unlinkFiles(string $mask)
+    public function unlinkFiles(string $mask): bool
     {
         $toDelete = glob($mask);
         $toDeleteCount = count($toDelete);
+        $opStatus = [];
         for ($c = 0; $c < $toDeleteCount; $c++) {
-            @unlink($toDelete[$c]);
+            $opStatus[] = (int) @unlink($toDelete[$c]);
         }
+        $status = array_reduce($opStatus, function ($car, $ite) {
+            return $car += $ite;
+        });
+        return ($status > 0);
     }
 
     /**
      * unlink multiples folders even if not empty from a path
      *
      * @param string $mask
-     * @return void
+     * @return boolean
      */
-    public function unlinkFolders(string $path)
+    public function unlinkFolders(string $path): bool
     {
         $toDelete = $this->folderList($path);
         $toDeleteCount = count($toDelete);
+        $opStatus = [];
         for ($c = 0; $c < $toDeleteCount; $c++) {
-            $this->deleteFolder($toDelete[$c]);
+            $opStatus[] = (int) $this->deleteFolder($toDelete[$c]);
         }
+        $status = array_reduce($opStatus, function ($car, $ite) {
+            return $car += $ite;
+        });
+        return ($status > 0);
     }
 
     /**

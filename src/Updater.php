@@ -72,7 +72,7 @@ class Updater implements Interfaces\UpdaterInterface
     /**
      * update
      *
-     * @return GeoLiteIpUpdater
+     * @return Updater
      */
     public function update(): Updater
     {
