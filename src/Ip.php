@@ -171,10 +171,12 @@ class Ip implements Interfaces\IpInterface
         if (false === is_resource($handle)) {
             throw new \Exception('Error: File open issue');
         }
-        while (($ip = fgets($handle, self::BUFFER)) !== false) {
-            $this->addIp($ip);
+        if (false !== $handle) {
+            while (($ip = fgets($handle, self::BUFFER)) !== false) {
+                $this->addIp($ip);
+            }
+            fclose($handle);
         }
-        fclose($handle);
         return $this;
     }
 
