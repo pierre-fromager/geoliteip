@@ -1,10 +1,12 @@
-# geoliteip
+# :elephant: geoliteip
 
 [![TravsisBadgeBuild](https://travis-ci.org/pierre-fromager/geoliteip.svg?branch=master)](https://travis-ci.org/pierre-fromager/geoliteip)
+[![Coverage](https://scrutinizer-ci.com/g/pierre-fromager/geoliteip/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/pierre-fromager/geoliteip/)
+[![ScrutinizerScore](https://scrutinizer-ci.com/g/pierre-fromager/geoliteip/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pierre-fromager/geoliteip/)  
 
 Geoliteip is a php tool to use and manage maxmind GeoLite2 free databases in mmdb format.
 
-## Features
+## :ocean: Features
 
 * Use 3 free dbs as asn, country, city.
 * Change db on the fly without re-instanciate.
@@ -12,22 +14,22 @@ Geoliteip is a php tool to use and manage maxmind GeoLite2 free databases in mmd
 * Output as array, json, csv.
 * Update dbs on the fly or from composer.
 
-### Pro
+### :thumbsup: Pro
 
 * Flexibility and scalability with factory/adapter pattern.
 * Annotated and tested with full coverage.
 * Changing behaviours can be simply done by overloading/adding adapters.
 * All constants class centralized in src/Interfaces can be overloaded;
 
-### Cons
+### :thumbsdown: Cons
 
 * do not use non free GeoLite dbs (but can be extended to do the job).
 
-## Dependencies
+## :construction_worker: Dependencies
 
 * geoip2/geoip2
 
-## Testing & Coverage
+## :innocent: Testing & Coverage
 
 * before running tests install db doing
 ```
@@ -173,7 +175,7 @@ Changing forceUpdate to true will force update in silent mode.
 
 You can figure out the accuracy changing from ipv4 to ipv6 for the same location.
 
-## Todo
+## :hamster: Todo
 
 * Implement input arguments to read stdin.
 * Find a good php documentation generator...
