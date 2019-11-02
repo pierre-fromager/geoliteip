@@ -118,32 +118,37 @@ class Downloader implements Interfaces\DownloaderInterface
     public function curlDownload(string $url, string $toFilename): Downloader
     {
         touch($toFilename, 0777);
-        $fp = fopen($toFilename, 'wba+');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_VERBOSE, false);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, 0);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 300);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_USERAGENT, self::USER_AGENT);
-        curl_setopt($ch, CURLOPT_BUFFERSIZE, self::BUFFER_SIZE);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_NOPROGRESS, false);
-        curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, [$this, self::DOWNLOAD_CALLBACK]);
-        curl_setopt($ch, CURLOPT_AUTOREFERER, true);
-        curl_exec($ch);
-        if (!curl_errno($ch)) {
-            $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            if ($statusCode != 200) {
-                throw new \Exception('Bad http code : ' . $statusCode);
+        $handle = fopen($toFilename, 'wba+');
+        $handleOk = false !== $handle;
+        $cha = curl_init();
+        if (false !== $cha && $handleOk) {
+            curl_setopt($cha, CURLOPT_VERBOSE, false);
+            curl_setopt($cha, CURLOPT_URL, $url);
+            curl_setopt($cha, CURLOPT_POST, 0);
+            curl_setopt($cha, CURLOPT_TIMEOUT, 300);
+            curl_setopt($cha, CURLOPT_HEADER, false);
+            curl_setopt($cha, CURLOPT_USERAGENT, self::USER_AGENT);
+            curl_setopt($cha, CURLOPT_BUFFERSIZE, self::BUFFER_SIZE);
+            curl_setopt($cha, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($cha, CURLOPT_FILE, $handle);
+            curl_setopt($cha, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($cha, CURLOPT_BINARYTRANSFER, true);
+            curl_setopt($cha, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($cha, CURLOPT_NOPROGRESS, false);
+            curl_setopt($cha, CURLOPT_PROGRESSFUNCTION, [$this, self::DOWNLOAD_CALLBACK]);
+            curl_setopt($cha, CURLOPT_AUTOREFERER, true);
+            curl_exec($cha);
+            if (!curl_errno($cha)) {
+                $statusCode = curl_getinfo($cha, CURLINFO_HTTP_CODE);
+                if ($statusCode != 200) {
+                    throw new \Exception('Bad http code : ' . $statusCode);
+                }
             }
+            curl_close($cha);
         }
-        curl_close($ch);
-        fclose($fp);
+        if ($handleOk) {
+            fclose($handle);
+        }
         return $this;
     }
 
