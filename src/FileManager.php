@@ -169,7 +169,7 @@ class FileManager implements Interfaces\FileManagerInterface
             return false;
         }
         $toDelete = @glob($mask);
-        if (false === is_array($toDelete)) {
+        if (false === $toDelete) {
             return false;
         }
         if ($toDelete == []) {
