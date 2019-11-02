@@ -158,7 +158,10 @@ class FileManager implements Interfaces\FileManagerInterface
      */
     public function unlinkFiles(string $mask): bool
     {
-        $toDelete = glob($mask);
+        $toDelete = @glob($mask);
+        if (false === $toDelete) {
+            return $toDelete;
+        }
         $toDeleteCount = count($toDelete);
         $opStatus = [];
         for ($c = 0; $c < $toDeleteCount; $c++) {

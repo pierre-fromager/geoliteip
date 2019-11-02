@@ -146,7 +146,7 @@ class Downloader implements Interfaces\DownloaderInterface
             }
             curl_close($cha);
         }
-        if ($handleOk) {
+        if (is_resource($handle)) {
             fclose($handle);
         }
         return $this;
