@@ -3,3 +3,6 @@
 /src/assets/tests/sandbox/
 .php_cs.cache
 composer.lock
+junit.xml
+coverage.clover
+testdox.html
