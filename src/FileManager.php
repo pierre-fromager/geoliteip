@@ -198,17 +198,22 @@ class FileManager implements Interfaces\FileManagerInterface
      */
     public function deleteFolder(string $path): bool
     {
+        $opStatus = [];
         $fsItNoDots = \FilesystemIterator::SKIP_DOTS;
         $rdiT = new \RecursiveDirectoryIterator($path, $fsItNoDots);
         $riiFirstChild = \RecursiveIteratorIterator::CHILD_FIRST;
         $rii = new \RecursiveIteratorIterator($rdiT, $riiFirstChild);
         foreach ($rii as $file) {
             if ($file->isDir()) {
-                @rmdir($file->getPathname());
+                $opStatus[] = (int) @rmdir($file->getPathname());
             } else {
-                @unlink($file->getPathname());
+                $opStatus[] = (int) @unlink($file->getPathname());
             }
         }
-        return @rmdir($path);
+        $opStatus[] = (int) @rmdir($path);
+        $status = array_reduce($opStatus, function ($car, $ite) {
+            return $car += $ite;
+        });
+        return $status;
     }
 }
