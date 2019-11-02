@@ -168,15 +168,13 @@ class Ip implements Interfaces\IpInterface
     {
         $this->reset();
         $handle = @fopen($filename, 'r');
-        if (!is_resource($handle)) {
+        if (false === is_resource($handle)) {
             throw new \Exception('Error: File open issue');
         }
-        if ($handle) {
-            while (($ip = fgets($handle, self::BUFFER)) !== false) {
-                $this->addIp($ip);
-            }
-            fclose($handle);
+        while (($ip = fgets($handle, self::BUFFER)) !== false) {
+            $this->addIp($ip);
         }
+        fclose($handle);
         return $this;
     }
 

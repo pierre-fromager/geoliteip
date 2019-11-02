@@ -4,5 +4,6 @@
 .php_cs.cache
 composer.lock
 junit.xml
+clover.xml
 coverage.clover
 testdox.html
