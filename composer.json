@@ -8,9 +8,18 @@
         "free"
     ],
     "license": "LGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Pierre Fromager",
+            "homepage": "https://github.com/pierre-fromager"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "type": "project",
     "version": "1.0.2",
     "require": {
+        "php": "^7.0",
         "geoip2/geoip2": "~2.0"
     },
     "require-dev": {
