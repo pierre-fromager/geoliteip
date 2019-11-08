@@ -15,7 +15,7 @@
             "homepage": "https://github.com/pierre-fromager"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "type": "library",
     "version": "1.0.2",
