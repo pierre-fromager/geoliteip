@@ -3,8 +3,8 @@
 [![TravsisBadgeBuild](https://travis-ci.org/pierre-fromager/geoliteip.svg?branch=master)](https://travis-ci.org/pierre-fromager/geoliteip)
 [![Coverage](https://scrutinizer-ci.com/g/pierre-fromager/geoliteip/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/pierre-fromager/geoliteip/)
 [![ScrutinizerScore](https://scrutinizer-ci.com/g/pierre-fromager/geoliteip/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pierre-fromager/geoliteip/)  
-
-
+[![Total Downloads](https://poser.pugx.org/pier-infor/geoliteip/downloads)](https://packagist.org/packages/pier-infor/geoliteip)
+[![Latest Unstable Version](https://poser.pugx.org/pier-infor/geoliteip/v/unstable)](https://packagist.org/packages/pier-infor/geoliteip)
 
 Geoliteip is a php tool to use and manage maxmind GeoLite2 free databases in mmdb format.
 
