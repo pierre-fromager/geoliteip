@@ -7,7 +7,7 @@
         "maxmind",
         "free"
     ],
-    "license": "GNU3",
+    "license": "LGPL-3.0-or-later",
     "type": "project",
     "version": "1.0.2",
     "require": {
