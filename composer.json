@@ -4,19 +4,20 @@
     "keywords": [
         "php",
         "geoip",
-        "maxmind",
-        "free"
+        "maxmind"
     ],
+    "homepage": "https://github.com/pierre-fromager/geoliteip",
     "license": "LGPL-3.0-or-later",
     "authors": [
         {
             "name": "Pierre Fromager",
+            "email": "infor@pier-infor.fr",
             "homepage": "https://github.com/pierre-fromager"
         }
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "type": "project",
+    "type": "library",
     "version": "1.0.2",
     "require": {
         "php": "^7.0",
