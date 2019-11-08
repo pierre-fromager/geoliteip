@@ -57,34 +57,13 @@ composer run db
 
 ### Integration
 
-To play with GeoLiteIp from your own projects, adjust your composer.json as below.
+Best is with composer :  
 
-For information '...' is just a continuity marker, pls do not copy as it.
+``` bash
+composer require pier-infor/geoliteip
+```  
 
-Add as below :
-
-* the required packages
-
-``` json
-"require": {
-    ...
-    "PierInfor/GeoLiteIp": "dev-master"
-}	
-```
-
-* the package definition
-
-``` json
-"repositories": [
-    ...
-    {
-        "type": "git",
-        "url": "https://github.com/pierre-fromager/geoliteip.git"
-    }
-],
-```
-
-* the script to run update/download on post install
+To integrate the postInstall process, adjust your composer.json as below.
 
 ``` json
 "scripts": {
